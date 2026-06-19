@@ -1,0 +1,54 @@
+<ion-content class="login-content">
+  <div class="login-shell">
+    <div class="login-card">
+      <h1>Login</h1>
+
+      <form class="form" (ngSubmit)="submitLogin()" #loginForm="ngForm">
+        <p class="field">
+          <input
+            type="text"
+            name="apiIp"
+            [(ngModel)]="apiIp"
+            placeholder="IP servidor: 192.168.1.10"
+            required
+          />
+        </p>
+
+        <p class="field">
+          <input
+            type="text"
+            name="username"
+            [(ngModel)]="username"
+            placeholder="Username"
+            required
+          />
+        </p>
+
+        <p class="field">
+          <input
+            type="password"
+            name="password"
+            [(ngModel)]="password"
+            placeholder="Password"
+            required
+          />
+        </p>
+
+        <p class="feedback error" *ngIf="errorMessage">{{ errorMessage }}</p>
+        <p class="feedback success" *ngIf="successMessage">{{ successMessage }}</p>
+        <div class="debug-log" *ngIf="debugLog.length">
+          <strong>Log</strong>
+          <pre>{{ debugText }}</pre>
+        </div>
+
+        <p class="submit">
+          <input
+            type="submit"
+            value="{{ isSubmitting ? 'Validando...' : 'Login' }}"
+            [disabled]="isSubmitting || !loginForm.form.valid"
+          />
+        </p>
+      </form>
+    </div>
+  </div>
+</ion-content>

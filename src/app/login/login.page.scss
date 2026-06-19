@@ -1,0 +1,131 @@
+$loginfonts: 13px/20px "Open Sans", Tahoma, Verdana, sans-serif;
+$fontscolor: #a7a599;
+$loginbg: #31302b;
+$headerbg: #1abc9c;
+$buttoncolor: #16a085;
+$buttonhover: rgba(26, 188, 156, 1);
+
+@import "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700)";
+
+.login-content {
+  --background: #31302b;
+  font: $loginfonts;
+  color: $fontscolor;
+}
+
+.login-shell {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 370px;
+  background: #fff;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+}
+
+.login-card h1 {
+  margin: 0;
+  line-height: 55px;
+  font-size: 24px;
+  font-weight: 700;
+  font-family: "Open Sans", sans-serif;
+  text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+  background: $headerbg;
+}
+
+.form {
+  padding: 30px 24px 24px;
+}
+
+.field {
+  margin: 0 0 15px;
+}
+
+.field input {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: "Open Sans", Calibri, Arial, sans-serif;
+  font-size: 14px;
+  padding: 12px 15px;
+  border: none;
+  background: #f7f3eb;
+  color: #676056;
+}
+
+.field input:focus,
+.submit input:focus {
+  outline: none;
+}
+
+.feedback {
+  margin: 0 0 15px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.feedback.error {
+  color: #c0392b;
+}
+
+.feedback.success {
+  color: #1e8449;
+}
+
+.debug-log {
+  margin: 0 0 15px;
+  padding: 10px;
+  background: #201f1c;
+  color: #f7f3eb;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.debug-log strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #1abc9c;
+}
+
+.debug-log pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font: 12px/1.45 Consolas, "Courier New", monospace;
+}
+
+.submit {
+  margin: 0;
+}
+
+.submit input {
+  width: 100%;
+  border: none;
+  padding: 12px 0;
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+  color: #fff;
+  background: $buttoncolor;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit input:hover:enabled,
+.submit input:focus:enabled {
+  background: $buttonhover;
+}
+
+.submit input:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
