@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header class="calorias-header">
   <ion-toolbar>
     <ion-title>Calorías</ion-title>
   </ion-toolbar>
@@ -10,180 +10,311 @@
 
     <section class="screen">
 
-      <!-- Barra superior -->
+      <!-- Barra superior tipo app -->
       <div class="topbar">
 
-        <a
-          class="icon-btn"
+        <button
+          class="header-action"
+          type="button"
           routerLink="/home"
           aria-label="Regresar"
         >
           ‹
-        </a>
+        </button>
 
-        <h2>
-          Conteo de calorías
-        </h2>
+        <div class="date-title">
+          <span class="calendar-icon">▣</span>
+          <h2>Hoy</h2>
+        </div>
 
-        <span class="topbar-spacer"></span>
+        <div class="header-actions-right">
+          <button
+            class="header-action"
+            type="button"
+            aria-label="Día siguiente"
+          >
+            ›
+          </button>
+
+          <button
+            class="header-action dots"
+            type="button"
+            aria-label="Opciones"
+          >
+            ⋮
+          </button>
+        </div>
 
       </div>
 
-      <!-- Resumen de calorías -->
-      <div class="card result-score">
+      <!-- Resumen superior de macros -->
+      <div class="macro-dashboard">
 
-        <div class="calorie-ring">
-          <div>
-            <strong>
-              1,420
-            </strong>
-
-            <span class="muted">
-              kcal
-            </span>
+        <div class="macro-item carbs">
+          <h3>Carbohidratos</h3>
+          <div class="macro-bar">
+            <span style="width: 0%;"></span>
           </div>
+          <strong>0 / 238 g</strong>
         </div>
 
-        <h2>
-          Meta diaria: 2,100 kcal
-        </h2>
+        <div class="macro-item protein">
+          <h3>Proteína</h3>
+          <div class="macro-bar">
+            <span style="width: 0%;"></span>
+          </div>
+          <strong>0 / 143 g</strong>
+        </div>
 
-        <p class="subtitle">
-          Te quedan aproximadamente 680 kcal para completar tu objetivo de hoy.
+        <div class="macro-item fat">
+          <h3>Grasa</h3>
+          <div class="macro-bar">
+            <span style="width: 0%;"></span>
+          </div>
+          <strong>0 / 42 g</strong>
+        </div>
+
+      </div>
+
+      <!-- Barra de calorías -->
+      <div class="daily-calories">
+
+        <div class="calories-progress">
+          <span style="width: 0%;"></span>
+        </div>
+
+        <p>
+          <strong>0</strong> / 1900 kcal
         </p>
 
-        <span class="pill">
-          68% completado
-        </span>
-
       </div>
 
-      <!-- Agregar alimento -->
-      <div class="card">
+      <!-- Banner interno opcional -->
+      <button
+        class="mini-banner"
+        type="button"
+        routerLink="/chat"
+      >
+        <span>Usa el chatbot para estimar tus alimentos</span>
+        <strong>IA</strong>
+      </button>
 
-        <h3>
-          Agregar alimento
-        </h3>
-
-        <br>
-
-        <div class="field">
-
-          <label>
-            Comida
-          </label>
-
-          <input
-            class="input"
-            type="text"
-            placeholder="Ej. ensalada, pollo, arroz..."
-          />
-
-        </div>
-
-        <div class="field">
-
-          <label>
-            Calorías aproximadas
-          </label>
-
-          <input
-            class="input"
-            type="number"
-            placeholder="Ej. 350"
-          />
-
-        </div>
+      <!-- Modo / Detalles -->
+      <div class="mode-row">
 
         <button
-          class="btn"
+          class="mode-btn"
           type="button"
         >
-          Registrar calorías
+          <span class="mode-icon">◔</span>
+          Por defecto
+        </button>
+
+        <button
+          class="details-btn"
+          type="button"
+        >
+          Detalles
         </button>
 
       </div>
 
-      <!-- Registro de hoy -->
-      <div class="card">
+      <!-- Tarjetas de comidas -->
+      <section class="meal-card">
 
-        <h3>
-          Registro de hoy
-        </h3>
+        <div class="meal-header">
+          <h3>Desayuno</h3>
 
-        <div class="meal-row">
+          <button
+            class="meal-menu"
+            type="button"
+            aria-label="Opciones de desayuno"
+          >
+            ⋮
+          </button>
+        </div>
 
-          <div>
-            <h3>
-              Desayuno
-            </h3>
+        <div class="meal-macros">
 
-            <p>
-              Avena con fruta y café
-            </p>
+          <div class="meal-macro carbs">
+            <strong>0 / 60</strong>
+            <span>Carbohidratos</span>
           </div>
 
-          <span class="kcal">
-            420 kcal
-          </span>
+          <div class="meal-macro protein">
+            <strong>0 / 36</strong>
+            <span>Proteína</span>
+          </div>
+
+          <div class="meal-macro fat">
+            <strong>0 / 11</strong>
+            <span>Grasa</span>
+          </div>
+
+          <div class="meal-macro kcal-box">
+            <strong>0 / 475</strong>
+            <span>Calorías</span>
+          </div>
 
         </div>
 
-        <div class="meal-row">
+        <button
+          class="add-food"
+          type="button"
+          routerLink="/scan-comida"
+        >
+          <span>+</span>
+          Agregar alimento
+        </button>
 
-          <div>
-            <h3>
-              Comida
-            </h3>
+      </section>
 
-            <p>
-              Pollo, arroz y verduras
-            </p>
+      <section class="meal-card">
+
+        <div class="meal-header">
+          <h3>Comida</h3>
+
+          <button
+            class="meal-menu"
+            type="button"
+            aria-label="Opciones de comida"
+          >
+            ⋮
+          </button>
+        </div>
+
+        <div class="meal-macros">
+
+          <div class="meal-macro carbs">
+            <strong>0 / 60</strong>
+            <span>Carbohidratos</span>
           </div>
 
-          <span class="kcal">
-            650 kcal
-          </span>
+          <div class="meal-macro protein">
+            <strong>0 / 36</strong>
+            <span>Proteína</span>
+          </div>
+
+          <div class="meal-macro fat">
+            <strong>0 / 11</strong>
+            <span>Grasa</span>
+          </div>
+
+          <div class="meal-macro kcal-box">
+            <strong>0 / 475</strong>
+            <span>Calorías</span>
+          </div>
 
         </div>
 
-        <div class="meal-row">
+        <button
+          class="add-food"
+          type="button"
+          routerLink="/scan-comida"
+        >
+          <span>+</span>
+          Agregar alimento
+        </button>
 
-          <div>
-            <h3>
-              Snack
-            </h3>
+      </section>
 
-            <p>
-              Yogurt natural
-            </p>
+      <section class="meal-card">
+
+        <div class="meal-header">
+          <h3>Cena</h3>
+
+          <button
+            class="meal-menu"
+            type="button"
+            aria-label="Opciones de cena"
+          >
+            ⋮
+          </button>
+        </div>
+
+        <div class="meal-macros">
+
+          <div class="meal-macro carbs">
+            <strong>0 / 60</strong>
+            <span>Carbohidratos</span>
           </div>
 
-          <span class="kcal">
-            180 kcal
-          </span>
+          <div class="meal-macro protein">
+            <strong>0 / 36</strong>
+            <span>Proteína</span>
+          </div>
+
+          <div class="meal-macro fat">
+            <strong>0 / 11</strong>
+            <span>Grasa</span>
+          </div>
+
+          <div class="meal-macro kcal-box">
+            <strong>0 / 475</strong>
+            <span>Calorías</span>
+          </div>
 
         </div>
 
-        <div class="meal-row">
+        <button
+          class="add-food"
+          type="button"
+          routerLink="/scan-comida"
+        >
+          <span>+</span>
+          Agregar alimento
+        </button>
 
-          <div>
-            <h3>
-              Bebidas
-            </h3>
+      </section>
 
-            <p>
-              Agua y té sin azúcar
-            </p>
+      <section class="meal-card">
+
+        <div class="meal-header">
+          <h3>Snacks</h3>
+
+          <button
+            class="meal-menu"
+            type="button"
+            aria-label="Opciones de snacks"
+          >
+            ⋮
+          </button>
+        </div>
+
+        <div class="meal-macros">
+
+          <div class="meal-macro carbs">
+            <strong>0 / 58</strong>
+            <span>Carbohidratos</span>
           </div>
 
-          <span class="kcal">
-            170 kcal
-          </span>
+          <div class="meal-macro protein">
+            <strong>0 / 35</strong>
+            <span>Proteína</span>
+          </div>
+
+          <div class="meal-macro fat">
+            <strong>0 / 9</strong>
+            <span>Grasa</span>
+          </div>
+
+          <div class="meal-macro kcal-box">
+            <strong>0 / 475</strong>
+            <span>Calorías</span>
+          </div>
 
         </div>
 
-      </div>
+        <button
+          class="add-food"
+          type="button"
+          routerLink="/scan-comida"
+        >
+          <span>+</span>
+          Agregar alimento
+        </button>
+
+      </section>
 
     </section>
 
@@ -194,7 +325,7 @@
         class="nav-item"
         routerLink="/home"
       >
-        <span>🏠</span>
+        <span>⌂</span>
         Inicio
       </a>
 
@@ -202,31 +333,31 @@
         class="nav-item"
         routerLink="/chat"
       >
-        <span>💬</span>
+        <span>◌</span>
         Chat
       </a>
 
       <a
-        class="camera-nav"
-        routerLink="/scan-comida"
-        aria-label="Escanear comida"
+        class="camera-nav active"
+        routerLink="/calorias"
+        aria-label="Calorías"
       >
-        <span>📷</span>
+        <span>▣</span>
       </a>
 
       <a
-        class="nav-item active"
-        routerLink="/calorias"
+        class="nav-item"
+        routerLink="/scan-comida"
       >
-        <span>🔥</span>
-        Calorías
+        <span>▤</span>
+        Escáner
       </a>
 
       <a
         class="nav-item"
         routerLink="/perfil"
       >
-        <span>👤</span>
+        <span>⚙</span>
         Perfil
       </a>
 

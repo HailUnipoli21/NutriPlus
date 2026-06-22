@@ -24,6 +24,10 @@ $shadow: 0 18px 42px rgba(0,0,0,.42);
 $glow: 0 0 26px rgba(183,108,255,.28);
 
 // Ionic
+.calorias-header {
+  display: none;
+}
+
 ion-toolbar {
   --background: #090613;
   --color: #f7f2ff;
@@ -43,9 +47,20 @@ ion-content {
   padding: 0;
 }
 
+a,
+button {
+  font-family: inherit;
+}
+
 a {
   text-decoration: none;
   color: inherit;
+}
+
+button {
+  border: 0;
+  outline: 0;
+  cursor: pointer;
 }
 
 // Contenedor principal
@@ -70,243 +85,18 @@ a {
 
 // Pantalla
 .screen {
-  padding: 28px 22px 104px;
   min-height: 824px;
+  padding: 0 12px 112px;
 }
 
 // Barra superior
 .topbar {
+  min-height: 88px;
+  padding: 18px 14px 14px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  margin-bottom: 22px;
-  gap: 12px;
-
-  h2 {
-    font-size: 20px;
-    color: $text;
-  }
-}
-
-.topbar-spacer {
-  width: 42px;
-  height: 42px;
-  display: block;
-}
-
-// Botón regresar
-.icon-btn {
-  width: 42px;
-  height: 42px;
-
-  border: 1px solid $line;
-  border-radius: 14px;
-
-  background: rgba(255,255,255,.06);
-  box-shadow: $shadow;
-
-  display: grid;
-  place-items: center;
-
-  font-size: 28px;
-  line-height: 1;
-
-  cursor: pointer;
-
-  color: $text;
-
-  backdrop-filter: blur(10px);
-}
-
-// Tarjetas
-.card {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,.075),
-      rgba(255,255,255,.045)
-    );
-
-  border: 1px solid $line;
-
-  border-radius: $radius;
-
-  padding: 20px;
-
-  box-shadow: $shadow;
-
-  margin-bottom: 16px;
-
-  backdrop-filter: blur(14px);
-
-  h3 {
-    color: $text;
-    font-size: 17px;
-  }
-}
-
-// Resultado de calorías
-.result-score {
-  text-align: center;
-
-  padding: 26px;
-
-  h2 {
-    color: $text;
-    font-size: 22px;
-    margin-bottom: 10px;
-  }
-}
-
-.calorie-ring {
-  width: 166px;
-  height: 166px;
-
-  border-radius: 50%;
-
-  background:
-    conic-gradient(
-      $secondary 0 68%,
-      #251d34 68% 100%
-    );
-
-  display: grid;
-  place-items: center;
-
-  margin: 0 auto 18px;
-
-  box-shadow: $glow;
-
-  div {
-    width: 124px;
-    height: 124px;
-
-    border-radius: 50%;
-
-    background: #090613;
-
-    display: grid;
-    place-items: center;
-
-    text-align: center;
-  }
-
-  strong {
-    font-size: 30px;
-    color: $text;
-  }
-
-  span {
-    display: block;
-    font-size: 13px;
-  }
-}
-
-.muted {
-  color: $muted;
-}
-
-.subtitle {
-  color: $muted;
-
-  font-size: 15px;
-  line-height: 1.5;
-
-  margin-bottom: 20px;
-}
-
-// Pill
-.pill {
-  display: inline-block;
-
-  padding: 7px 10px;
-
-  border-radius: 999px;
-
-  background: rgba(183,108,255,.16);
-
-  color: $secondary;
-
-  font-size: 12px;
-  font-weight: 900;
-
-  border: 1px solid rgba(226,184,255,.18);
-
-  &.warn {
-    background: rgba(246,193,119,.14);
-    color: #ffdca8;
-  }
-
-  &.danger {
-    background: rgba(255,107,156,.14);
-    color: #ff9fbd;
-  }
-}
-
-// Campos
-.field {
-  margin-bottom: 14px;
-
-  label {
-    display: block;
-
-    margin-bottom: 8px;
-
-    color: $secondary;
-
-    font-size: 13px;
-    font-weight: 800;
-  }
-}
-
-.input,
-.textarea,
-.select {
-  width: 100%;
-
-  border: 1px solid $line;
-  border-radius: 16px;
-
-  padding: 14px 15px;
-
-  font-size: 15px;
-
-  background: #0d0a16;
-
-  color: $text;
-
-  outline: none;
-
-  &::placeholder {
-    color: #827291;
-  }
-
-  &:focus {
-    border-color: $primary;
-
-    box-shadow:
-      0 0 0 4px rgba(183,108,255,.15);
-  }
-}
-
-// Botón
-.btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-
-  border: none;
-  border-radius: 18px;
-
-  padding: 15px 16px;
-
-  font-weight: 900;
-  font-size: 15px;
-
-  cursor: pointer;
 
   background:
     linear-gradient(
@@ -316,68 +106,436 @@ a {
       $accent-2
     );
 
-  color: white;
+  box-shadow: 0 18px 38px rgba(124,58,237,.22);
+}
 
-  box-shadow:
-    0 14px 28px rgba(124,58,237,.32);
+.date-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 
-  &.secondary {
-    background: rgba(183,108,255,.14);
+  h2 {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: .2px;
+  }
+}
 
-    color: $secondary;
+.calendar-icon {
+  color: #fff;
+  font-size: 17px;
+  opacity: .95;
+}
 
-    border: 1px solid $line;
+.header-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
 
-    box-shadow: none;
+.header-action {
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 14px;
+
+  background: transparent;
+  color: #fff;
+
+  font-size: 42px;
+  line-height: 1;
+
+  transition:
+    transform .18s ease,
+    background .18s ease;
+
+  &:active {
+    transform: scale(.94);
+    background: rgba(255,255,255,.12);
   }
 
-  &.green {
+  &.dots {
+    font-size: 33px;
+    font-weight: 900;
+  }
+}
+
+// Resumen de macros
+.macro-dashboard {
+  padding: 14px 10px 8px;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+
+  background: rgba(5,4,10,.84);
+  border-bottom: 1px solid $line;
+}
+
+.macro-item {
+  text-align: center;
+
+  h3 {
+    margin-bottom: 7px;
+
+    font-size: 13px;
+    font-weight: 900;
+    line-height: 1.2;
+  }
+
+  strong {
+    display: block;
+    margin-top: 8px;
+
+    font-size: 18px;
+    font-weight: 950;
+    letter-spacing: .2px;
+  }
+
+  &.carbs {
+    h3,
+    strong {
+      color: $danger;
+    }
+
+    .macro-bar span {
+      background: $danger;
+    }
+  }
+
+  &.protein {
+    h3,
+    strong {
+      color: #6f93ff;
+    }
+
+    .macro-bar span {
+      background: #6f93ff;
+    }
+  }
+
+  &.fat {
+    h3,
+    strong {
+      color: $warning;
+    }
+
+    .macro-bar span {
+      background: $warning;
+    }
+  }
+}
+
+.macro-bar {
+  width: 100%;
+  height: 8px;
+
+  border-radius: 999px;
+  overflow: hidden;
+
+  background: rgba(255,255,255,.10);
+
+  span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    box-shadow: $glow;
+  }
+}
+
+// Calorías diarias
+.daily-calories {
+  padding: 0 10px 14px;
+
+  background: rgba(5,4,10,.84);
+
+  p {
+    margin-top: 8px;
+
+    color: #6f93ff;
+    text-align: center;
+
+    font-size: 17px;
+    font-weight: 500;
+  }
+
+  strong {
+    font-weight: 900;
+  }
+}
+
+.calories-progress {
+  height: 10px;
+
+  background: rgba(111,147,255,.18);
+  border-radius: 999px;
+  overflow: hidden;
+
+  span {
+    display: block;
+    height: 100%;
+
+    border-radius: inherit;
+
     background:
       linear-gradient(
         135deg,
-        $accent,
-        $primary,
+        $primary-dark,
+        #6f93ff,
         $secondary
       );
   }
 }
 
-// Registro de comidas
-.meal-row {
+// Banner
+.mini-banner {
+  width: calc(100% - 64px);
+  min-height: 48px;
+
+  margin: 14px 32px 8px;
+  padding: 8px 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  border: 1px solid rgba(226,184,255,.20);
+  border-radius: 6px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(183,108,255,.32),
+      rgba(124,58,237,.22)
+    );
+
+  color: $text;
+
+  box-shadow: 0 12px 24px rgba(0,0,0,.28);
+
+  span {
+    font-size: 12px;
+    font-weight: 800;
+    text-align: left;
+  }
+
+  strong {
+    width: 34px;
+    height: 34px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 10px;
+
+    background: rgba(255,255,255,.16);
+    color: #fff;
+
+    font-size: 13px;
+  }
+
+  &:active {
+    transform: scale(.98);
+  }
+}
+
+// Modo / detalles
+.mode-row {
+  padding: 12px 28px 20px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  gap: 10px;
-
-  padding: 13px 0;
-
+  background: rgba(5,4,10,.84);
   border-bottom: 1px solid $line;
+}
 
-  &:last-child {
-    border-bottom: 0;
-  }
+.mode-btn,
+.details-btn {
+  background: transparent;
+  font-size: 17px;
+  font-weight: 950;
 
-  h3 {
-    font-size: 15px;
-    color: $text;
-  }
+  transition:
+    transform .18s ease,
+    opacity .18s ease;
 
-  p {
-    font-size: 12px;
-    color: $muted;
-    line-height: 1.35;
-
-    margin-top: 3px;
+  &:active {
+    transform: scale(.96);
+    opacity: .78;
   }
 }
 
-.kcal {
-  color: $secondary;
+.mode-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 
-  font-weight: 900;
+  color: $warning;
+}
 
-  white-space: nowrap;
+.mode-icon {
+  font-size: 25px;
+}
+
+.details-btn {
+  color: $danger;
+}
+
+// Tarjetas de comida
+.meal-card {
+  margin: 16px 10px 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.075),
+      rgba(255,255,255,.045)
+    );
+
+  border: 1px solid $line;
+  border-radius: $radius;
+
+  box-shadow: $shadow;
+  overflow: hidden;
+
+  backdrop-filter: blur(14px);
+}
+
+.meal-header {
+  min-height: 74px;
+  padding: 18px 16px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-bottom: 1px solid rgba(226,184,255,.10);
+
+  h3 {
+    color: $text;
+    font-size: 19px;
+    font-weight: 950;
+  }
+}
+
+.meal-menu {
+  width: 38px;
+  height: 38px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 12px;
+
+  background: transparent;
+  color: $text;
+
+  font-size: 34px;
+  line-height: 1;
+
+  transition:
+    transform .18s ease,
+    background .18s ease;
+
+  &:active {
+    transform: scale(.94);
+    background: rgba(255,255,255,.08);
+  }
+}
+
+.meal-macros {
+  padding: 14px 14px 10px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+
+  border-bottom: 1px solid rgba(226,184,255,.10);
+}
+
+.meal-macro {
+  text-align: center;
+
+  strong {
+    display: block;
+    margin-bottom: 4px;
+
+    font-size: 17px;
+    font-weight: 950;
+    white-space: nowrap;
+  }
+
+  span {
+    display: block;
+
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  &.carbs {
+    color: $danger;
+  }
+
+  &.protein {
+    color: #6f93ff;
+  }
+
+  &.fat {
+    color: $warning;
+  }
+
+  &.kcal-box {
+    color: #6f93ff;
+  }
+}
+
+.add-food {
+  width: 100%;
+  min-height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  background: transparent;
+  color: $danger;
+
+  font-size: 17px;
+  font-weight: 950;
+
+  transition:
+    transform .18s ease,
+    background .18s ease;
+
+  span {
+    width: 23px;
+    height: 23px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: $danger;
+    color: #fff;
+
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  &:active {
+    transform: scale(.98);
+    background: rgba(255,107,156,.08);
+  }
 }
 
 // Navegación inferior
@@ -390,7 +548,7 @@ a {
 
   min-height: 82px;
 
-  background: rgba(5,4,10,.92);
+  background: rgba(18,16,27,.96);
 
   border-top: 1px solid $line;
 
@@ -421,10 +579,18 @@ a {
 
   min-width: 58px;
 
+  transition:
+    transform .18s ease,
+    color .18s ease;
+
   span {
     display: block;
-    font-size: 19px;
+    font-size: 23px;
     margin-bottom: 4px;
+  }
+
+  &:active {
+    transform: translateY(2px) scale(.96);
   }
 
   &.active {
@@ -433,14 +599,12 @@ a {
   }
 }
 
-// Botón central cámara
+// Botón central activo
 .camera-nav {
-  width: 66px;
-  height: 66px;
+  width: 58px;
+  height: 58px;
 
-  margin-top: -34px;
-
-  border-radius: 24px;
+  border-radius: 18px;
 
   background:
     linear-gradient(
@@ -457,16 +621,25 @@ a {
 
   box-shadow:
     0 16px 38px rgba(183,108,255,.44),
-    0 0 0 8px rgba(5,4,10,.95);
+    0 0 0 8px rgba(5,4,10,.88);
 
   border: 1px solid rgba(226,184,255,.36);
 
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+
+  transition:
+    transform .18s ease,
+    filter .18s ease;
 
   span {
     font-size: 28px;
     display: block;
     line-height: 1;
+  }
+
+  &:active {
+    transform: translateY(-1px) scale(.95);
+    filter: brightness(1.12);
   }
 }
 
@@ -488,5 +661,27 @@ a {
 
   .bottom-nav {
     position: fixed;
+  }
+}
+
+@media (max-width: 360px) {
+  .meal-macro {
+    strong {
+      font-size: 14px;
+    }
+
+    span {
+      font-size: 10px;
+    }
+  }
+
+  .macro-item {
+    h3 {
+      font-size: 11px;
+    }
+
+    strong {
+      font-size: 15px;
+    }
   }
 }
