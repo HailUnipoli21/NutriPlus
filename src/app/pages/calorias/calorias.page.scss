@@ -1,0 +1,213 @@
+.screen {
+  padding: 28px 22px 104px;
+
+  min-height: 824px;
+}
+
+.card {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.075),
+      rgba(255,255,255,.045)
+    );
+
+  border: 1px solid $line;
+
+  border-radius: $radius;
+
+  padding: 20px;
+
+  box-shadow: $shadow;
+
+  margin-bottom: 16px;
+
+  backdrop-filter: blur(14px);
+}
+
+.result-score {
+  text-align: center;
+
+  padding: 26px;
+}
+
+.subtitle {
+  color: $muted;
+
+  line-height: 1.5;
+
+  margin-top: 12px;
+
+  margin-bottom: 18px;
+}
+
+.muted {
+  color: $muted;
+}
+
+.pill {
+  display: inline-block;
+
+  padding: 7px 10px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(183,108,255,.16);
+
+  color: $secondary;
+
+  font-size: 12px;
+
+  font-weight: 900;
+}
+
+.calorie-ring {
+  width: 166px;
+
+  height: 166px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 50%;
+
+  display: grid;
+
+  place-items: center;
+
+  background:
+    conic-gradient(
+      $secondary 0 68%,
+      #251d34 68% 100%
+    );
+
+  box-shadow: $glow;
+
+  div {
+    width: 124px;
+
+    height: 124px;
+
+    border-radius: 50%;
+
+    background: #090613;
+
+    display: grid;
+
+    place-items: center;
+
+    text-align: center;
+  }
+
+  strong {
+    font-size: 30px;
+  }
+}
+
+.meal-row {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 13px 0;
+
+  border-bottom: 1px solid $line;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  h3 {
+    font-size: 15px;
+  }
+
+  p {
+    color: $muted;
+
+    font-size: 12px;
+
+    margin-top: 3px;
+  }
+}
+
+.kcal {
+  color: $secondary;
+
+  font-weight: 900;
+}
+
+.bottom-nav {
+  position: absolute;
+
+  bottom: 0;
+
+  left: 0;
+
+  right: 0;
+
+  min-height: 82px;
+
+  display: flex;
+
+  justify-content: space-around;
+
+  align-items: center;
+
+  background:
+    rgba(5,4,10,.92);
+
+  border-top: 1px solid $line;
+
+  padding: 8px 4px;
+}
+
+.nav-item {
+  color: $muted;
+
+  text-align: center;
+
+  font-size: 11px;
+
+  span {
+    display: block;
+
+    font-size: 19px;
+
+    margin-bottom: 4px;
+  }
+
+  &.active {
+    color: $secondary;
+  }
+}
+
+.camera-nav {
+  width: 66px;
+
+  height: 66px;
+
+  margin-top: -34px;
+
+  border-radius: 24px;
+
+  display: grid;
+
+  place-items: center;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      $primary-dark,
+      $primary,
+      $accent-2
+    );
+
+  box-shadow:
+    0 16px 38px rgba(183,108,255,.44);
+}

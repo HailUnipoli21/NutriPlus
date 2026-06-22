@@ -1,9 +1,112 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>chat</ion-title>
+    <ion-title>Chat</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen>
+
+  <main class="app">
+
+    <section class="screen chat-screen">
+
+      <!-- Topbar -->
+      <div class="topbar">
+
+        <a
+          class="icon-btn"
+          routerLink="/home"
+          aria-label="Regresar"
+        >
+          ‹
+        </a>
+
+        <h2>
+          Asistente IA
+        </h2>
+
+        <span></span>
+
+      </div>
+
+      <!-- Chat -->
+      <div class="chat">
+
+        <div class="bubble ai">
+          Hola, soy tu asistente de salud. Cuéntame qué síntomas tienes o qué duda quieres resolver.
+        </div>
+
+        <div class="bubble user">
+          Me duele la cabeza desde ayer.
+        </div>
+
+        <div class="bubble ai">
+          Entiendo. ¿El dolor es leve, moderado o intenso? ¿Tienes fiebre, náuseas o visión borrosa?
+        </div>
+
+      </div>
+
+      <!-- Input de chat -->
+      <div class="chat-input">
+
+        <input
+          type="text"
+          placeholder="Escribe tu mensaje..."
+        />
+
+        <button type="button">
+          ➤
+        </button>
+
+      </div>
+
+    </section>
+
+    <!-- Navegación inferior -->
+    <nav class="bottom-nav scanner-nav">
+
+      <a
+        class="nav-item"
+        routerLink="/home"
+      >
+        <span>🏠</span>
+        Inicio
+      </a>
+
+      <a
+        class="nav-item active"
+        routerLink="/chat"
+      >
+        <span>💬</span>
+        Chat
+      </a>
+
+      <a
+        class="camera-nav"
+        routerLink="/scan-comida"
+        aria-label="Escanear comida"
+      >
+        <span>📷</span>
+      </a>
+
+      <a
+        class="nav-item"
+        routerLink="/calorias"
+      >
+        <span>🔥</span>
+        Calorías
+      </a>
+
+      <a
+        class="nav-item"
+        routerLink="/perfil"
+      >
+        <span>👤</span>
+        Perfil
+      </a>
+
+    </nav>
+
+  </main>
 
 </ion-content>

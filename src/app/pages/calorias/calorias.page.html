@@ -1,9 +1,217 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>calorias</ion-title>
+    <ion-title>Calorías</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen>
+
+  <main class="app">
+
+    <section class="screen">
+
+      <!-- Top -->
+      <div class="topbar">
+
+        <ion-button
+          fill="clear"
+          routerLink="/home"
+          class="icon-btn"
+        >
+          ‹
+        </ion-button>
+
+        <h2>Conteo de calorías</h2>
+
+        <span></span>
+
+      </div>
+
+      <!-- Resumen -->
+      <div class="card result-score">
+
+        <div class="calorie-ring">
+
+          <div>
+
+            <strong>1,420</strong>
+
+            <span class="muted">
+              kcal
+            </span>
+
+          </div>
+
+        </div>
+
+        <h2>
+          Meta diaria: 2,100 kcal
+        </h2>
+
+        <p class="subtitle">
+          Te quedan aproximadamente
+          680 kcal para completar
+          tu objetivo de hoy.
+        </p>
+
+        <span class="pill">
+          68% completado
+        </span>
+
+      </div>
+
+      <!-- Formulario -->
+      <div class="card">
+
+        <h3>
+          Agregar alimento
+        </h3>
+
+        <br>
+
+        <div class="field">
+
+          <label>
+            Comida
+          </label>
+
+          <input
+            class="input"
+            placeholder="Ej. ensalada, pollo, arroz..."
+          />
+
+        </div>
+
+        <div class="field">
+
+          <label>
+            Calorías aproximadas
+          </label>
+
+          <input
+            type="number"
+            class="input"
+            placeholder="Ej. 350"
+          />
+
+        </div>
+
+        <ion-button
+          expand="block"
+          class="btn"
+        >
+          Registrar calorías
+        </ion-button>
+
+      </div>
+
+      <!-- Registro -->
+      <div class="card">
+
+        <h3>
+          Registro de hoy
+        </h3>
+
+        <div class="meal-row">
+
+          <div>
+            <h3>Desayuno</h3>
+            <p>Avena con fruta y café</p>
+          </div>
+
+          <span class="kcal">
+            420 kcal
+          </span>
+
+        </div>
+
+        <div class="meal-row">
+
+          <div>
+            <h3>Comida</h3>
+            <p>Pollo, arroz y verduras</p>
+          </div>
+
+          <span class="kcal">
+            650 kcal
+          </span>
+
+        </div>
+
+        <div class="meal-row">
+
+          <div>
+            <h3>Snack</h3>
+            <p>Yogurt natural</p>
+          </div>
+
+          <span class="kcal">
+            180 kcal
+          </span>
+
+        </div>
+
+        <div class="meal-row">
+
+          <div>
+            <h3>Bebidas</h3>
+            <p>Agua y té sin azúcar</p>
+          </div>
+
+          <span class="kcal">
+            170 kcal
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav scanner-nav">
+
+      <a
+        class="nav-item"
+        routerLink="/home"
+      >
+        <span>🏠</span>
+        Inicio
+      </a>
+
+      <a
+        class="nav-item"
+        routerLink="/chat"
+      >
+        <span>💬</span>
+        Chat
+      </a>
+
+      <a
+        class="camera-nav"
+        routerLink="/scan-comida"
+      >
+        <span>📷</span>
+      </a>
+
+      <a
+        class="nav-item active"
+        routerLink="/calorias"
+      >
+        <span>🔥</span>
+        Calorías
+      </a>
+
+      <a
+        class="nav-item"
+        routerLink="/perfil"
+      >
+        <span>👤</span>
+        Perfil
+      </a>
+
+    </nav>
+
+  </main>
 
 </ion-content>

@@ -1,9 +1,98 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen>
+
+  <main class="app">
+
+    <section class="screen login-screen">
+
+      <!-- Topbar -->
+      <div class="topbar">
+
+        <a
+          class="icon-btn"
+          routerLink="/bienvenida"
+          aria-label="Regresar"
+        >
+          ‹
+        </a>
+
+        <div class="logo">
+          <div class="logo-mark">
+            +
+          </div>
+
+          Salud IA
+        </div>
+
+        <span class="topbar-spacer"></span>
+
+      </div>
+
+      <!-- Título -->
+      <h1 class="title">
+        Iniciar sesión
+      </h1>
+
+      <p class="subtitle">
+        Accede a tu panel de salud personalizado.
+      </p>
+
+      <!-- Formulario -->
+      <form class="card login-form">
+
+        <div class="field">
+
+          <label>
+            Correo electrónico
+          </label>
+
+          <input
+            class="input"
+            type="email"
+            placeholder="tuemail@correo.com"
+            autocomplete="email"
+          />
+
+        </div>
+
+        <div class="field">
+
+          <label>
+            Contraseña
+          </label>
+
+          <input
+            class="input"
+            type="password"
+            placeholder="********"
+            autocomplete="current-password"
+          />
+
+        </div>
+
+        <a
+          class="btn"
+          routerLink="/home"
+        >
+          Entrar
+        </a>
+
+        <a
+          class="small-link"
+          routerLink="/registro"
+        >
+          ¿No tienes cuenta? Regístrate
+        </a>
+
+      </form>
+
+    </section>
+
+  </main>
 
 </ion-content>

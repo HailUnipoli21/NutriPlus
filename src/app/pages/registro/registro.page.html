@@ -1,9 +1,106 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>registro</ion-title>
+    <ion-title>Registro</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen>
+
+  <main class="app">
+
+    <section class="screen registro-screen">
+
+      <!-- Barra superior -->
+      <div class="topbar">
+
+        <a
+          class="icon-btn"
+          routerLink="/login"
+          aria-label="Regresar"
+        >
+          ‹
+        </a>
+
+        <div class="logo">
+          <div class="logo-mark">
+            +
+          </div>
+
+          Salud IA
+        </div>
+
+        <span class="topbar-spacer"></span>
+
+      </div>
+
+      <!-- Título -->
+      <h1 class="title">
+        Crear cuenta
+      </h1>
+
+      <p class="subtitle">
+        Completa tus datos para comenzar.
+      </p>
+
+      <!-- Formulario -->
+      <form class="card registro-form">
+
+        <div class="field">
+
+          <label>
+            Nombre completo
+          </label>
+
+          <input
+            class="input"
+            type="text"
+            placeholder="Nombre y apellido"
+            autocomplete="name"
+          />
+
+        </div>
+
+        <div class="field">
+
+          <label>
+            Correo electrónico
+          </label>
+
+          <input
+            class="input"
+            type="email"
+            placeholder="tuemail@correo.com"
+            autocomplete="email"
+          />
+
+        </div>
+
+        <div class="field">
+
+          <label>
+            Contraseña
+          </label>
+
+          <input
+            class="input"
+            type="password"
+            placeholder="Mínimo 8 caracteres"
+            autocomplete="new-password"
+          />
+
+        </div>
+
+        <a
+          class="btn"
+          routerLink="/home"
+        >
+          Registrarme
+        </a>
+
+      </form>
+
+    </section>
+
+  </main>
 
 </ion-content>

@@ -1,9 +1,169 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>home</ion-title>
+    <ion-title>Home</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen>
+
+  <main class="app">
+
+    <section class="screen">
+
+      <!-- Barra superior -->
+      <div class="topbar">
+
+        <div>
+          <p class="muted">Hola,</p>
+
+          <h1>
+            Bienvenido/a
+          </h1>
+        </div>
+
+        <a
+          class="icon-btn"
+          routerLink="/perfil"
+          aria-label="Perfil"
+        >
+          👤
+        </a>
+
+      </div>
+
+      <!-- Hero principal -->
+      <div class="hero">
+
+        <h1>
+          ¿Cómo te sientes hoy?
+        </h1>
+
+        <p>
+          Registra tus síntomas o conversa con el asistente de IA.
+        </p>
+
+      </div>
+
+      <!-- Opciones principales -->
+      <div class="grid">
+
+        <a
+          class="feature"
+          routerLink="/sintomas"
+        >
+          <div class="emoji">
+            🩺
+          </div>
+
+          <h3>
+            Evaluar síntomas
+          </h3>
+
+          <p>
+            Cuestionario rápido de orientación.
+          </p>
+        </a>
+
+        <a
+          class="feature"
+          routerLink="/scan-comida"
+        >
+          <div class="emoji">
+            📷
+          </div>
+
+          <h3>
+            Escanear comida
+          </h3>
+
+          <p>
+            Usa la cámara para detectar alimentos.
+          </p>
+        </a>
+
+        <a
+          class="feature"
+          routerLink="/calorias"
+        >
+          <div class="emoji">
+            🔥
+          </div>
+
+          <h3>
+            Calorías
+          </h3>
+
+          <p>
+            Consulta tu consumo del día.
+          </p>
+        </a>
+
+        <a
+          class="feature"
+          routerLink="/chat"
+        >
+          <div class="emoji">
+            🤖
+          </div>
+
+          <h3>
+            Chat IA
+          </h3>
+
+          <p>
+            Pregunta dudas generales de salud.
+          </p>
+        </a>
+
+      </div>
+
+    </section>
+
+    <!-- Navegación inferior -->
+    <nav class="bottom-nav scanner-nav">
+
+      <a
+        class="nav-item active"
+        routerLink="/home"
+      >
+        <span>🏠</span>
+        Inicio
+      </a>
+
+      <a
+        class="nav-item"
+        routerLink="/chat"
+      >
+        <span>💬</span>
+        Chat
+      </a>
+
+      <a
+        class="camera-nav"
+        routerLink="/scan-comida"
+        aria-label="Escanear comida"
+      >
+        <span>📷</span>
+      </a>
+
+      <a
+        class="nav-item"
+        routerLink="/calorias"
+      >
+        <span>🔥</span>
+        Calorías
+      </a>
+
+      <a
+        class="nav-item"
+        routerLink="/perfil"
+      >
+        <span>👤</span>
+        Perfil
+      </a>
+
+    </nav>
+
+  </main>
 
 </ion-content>
