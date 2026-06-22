@@ -1,54 +1,98 @@
-<ion-content class="login-content">
-  <div class="login-shell">
-    <div class="login-card">
-      <h1>Login</h1>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-      <form class="form" (ngSubmit)="submitLogin()" #loginForm="ngForm">
-        <p class="field">
-          <input
-            type="text"
-            name="apiIp"
-            [(ngModel)]="apiIp"
-            placeholder="IP servidor: 192.168.1.10"
-            required
-          />
-        </p>
+<ion-content fullscreen>
 
-        <p class="field">
-          <input
-            type="text"
-            name="username"
-            [(ngModel)]="username"
-            placeholder="Username"
-            required
-          />
-        </p>
+  <main class="app">
 
-        <p class="field">
-          <input
-            type="password"
-            name="password"
-            [(ngModel)]="password"
-            placeholder="Password"
-            required
-          />
-        </p>
+    <section class="screen login-screen">
 
-        <p class="feedback error" *ngIf="errorMessage">{{ errorMessage }}</p>
-        <p class="feedback success" *ngIf="successMessage">{{ successMessage }}</p>
-        <div class="debug-log" *ngIf="debugLog.length">
-          <strong>Log</strong>
-          <pre>{{ debugText }}</pre>
+      <!-- Topbar -->
+      <div class="topbar">
+
+        <a
+          class="icon-btn"
+          routerLink="/bienvenida"
+          aria-label="Regresar"
+        >
+          ‹
+        </a>
+
+        <div class="logo">
+          <div class="logo-mark">
+            +
+          </div>
+
+          Salud IA
         </div>
 
-        <p class="submit">
+        <span class="topbar-spacer"></span>
+
+      </div>
+
+      <!-- Título -->
+      <h1 class="title">
+        Iniciar sesión
+      </h1>
+
+      <p class="subtitle">
+        Accede a tu panel de salud personalizado.
+      </p>
+
+      <!-- Formulario -->
+      <form class="card login-form">
+
+        <div class="field">
+
+          <label>
+            Correo electrónico
+          </label>
+
           <input
-            type="submit"
-            value="{{ isSubmitting ? 'Validando...' : 'Login' }}"
-            [disabled]="isSubmitting || !loginForm.form.valid"
+            class="input"
+            type="email"
+            placeholder="tuemail@correo.com"
+            autocomplete="email"
           />
-        </p>
+
+        </div>
+
+        <div class="field">
+
+          <label>
+            Contraseña
+          </label>
+
+          <input
+            class="input"
+            type="password"
+            placeholder="********"
+            autocomplete="current-password"
+          />
+
+        </div>
+
+        <a
+          class="btn"
+          routerLink="/home"
+        >
+          Entrar
+        </a>
+
+        <a
+          class="small-link"
+          routerLink="/registro"
+        >
+          ¿No tienes cuenta? Regístrate
+        </a>
+
       </form>
-    </div>
-  </div>
+
+    </section>
+
+  </main>
+
 </ion-content>

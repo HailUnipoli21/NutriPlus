@@ -10,38 +10,38 @@
 
     <section class="screen">
 
-      <!-- Top -->
+      <!-- Barra superior -->
       <div class="topbar">
 
-        <ion-button
-          fill="clear"
-          routerLink="/home"
+        <a
           class="icon-btn"
+          routerLink="/home"
+          aria-label="Regresar"
         >
           ‹
-        </ion-button>
+        </a>
 
-        <h2>Conteo de calorías</h2>
+        <h2>
+          Conteo de calorías
+        </h2>
 
-        <span></span>
+        <span class="topbar-spacer"></span>
 
       </div>
 
-      <!-- Resumen -->
+      <!-- Resumen de calorías -->
       <div class="card result-score">
 
         <div class="calorie-ring">
-
           <div>
-
-            <strong>1,420</strong>
+            <strong>
+              1,420
+            </strong>
 
             <span class="muted">
               kcal
             </span>
-
           </div>
-
         </div>
 
         <h2>
@@ -49,9 +49,7 @@
         </h2>
 
         <p class="subtitle">
-          Te quedan aproximadamente
-          680 kcal para completar
-          tu objetivo de hoy.
+          Te quedan aproximadamente 680 kcal para completar tu objetivo de hoy.
         </p>
 
         <span class="pill">
@@ -60,7 +58,7 @@
 
       </div>
 
-      <!-- Formulario -->
+      <!-- Agregar alimento -->
       <div class="card">
 
         <h3>
@@ -77,6 +75,7 @@
 
           <input
             class="input"
+            type="text"
             placeholder="Ej. ensalada, pollo, arroz..."
           />
 
@@ -89,23 +88,23 @@
           </label>
 
           <input
-            type="number"
             class="input"
+            type="number"
             placeholder="Ej. 350"
           />
 
         </div>
 
-        <ion-button
-          expand="block"
+        <button
           class="btn"
+          type="button"
         >
           Registrar calorías
-        </ion-button>
+        </button>
 
       </div>
 
-      <!-- Registro -->
+      <!-- Registro de hoy -->
       <div class="card">
 
         <h3>
@@ -115,8 +114,13 @@
         <div class="meal-row">
 
           <div>
-            <h3>Desayuno</h3>
-            <p>Avena con fruta y café</p>
+            <h3>
+              Desayuno
+            </h3>
+
+            <p>
+              Avena con fruta y café
+            </p>
           </div>
 
           <span class="kcal">
@@ -128,8 +132,13 @@
         <div class="meal-row">
 
           <div>
-            <h3>Comida</h3>
-            <p>Pollo, arroz y verduras</p>
+            <h3>
+              Comida
+            </h3>
+
+            <p>
+              Pollo, arroz y verduras
+            </p>
           </div>
 
           <span class="kcal">
@@ -141,8 +150,13 @@
         <div class="meal-row">
 
           <div>
-            <h3>Snack</h3>
-            <p>Yogurt natural</p>
+            <h3>
+              Snack
+            </h3>
+
+            <p>
+              Yogurt natural
+            </p>
           </div>
 
           <span class="kcal">
@@ -154,8 +168,13 @@
         <div class="meal-row">
 
           <div>
-            <h3>Bebidas</h3>
-            <p>Agua y té sin azúcar</p>
+            <h3>
+              Bebidas
+            </h3>
+
+            <p>
+              Agua y té sin azúcar
+            </p>
           </div>
 
           <span class="kcal">
@@ -168,7 +187,7 @@
 
     </section>
 
-    <!-- Bottom Nav -->
+    <!-- Navegación inferior -->
     <nav class="bottom-nav scanner-nav">
 
       <a
@@ -190,6 +209,7 @@
       <a
         class="camera-nav"
         routerLink="/scan-comida"
+        aria-label="Escanear comida"
       >
         <span>📷</span>
       </a>
