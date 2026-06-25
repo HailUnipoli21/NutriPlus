@@ -37,11 +37,11 @@
         </div>
 
         <h2>
-          Usuario Salud IA
+          {{ fullName || 'Usuario Salud IA' }}
         </h2>
 
         <p class="muted">
-          usuario@correo.com
+          {{ email }}
         </p>
 
       </div>
@@ -58,7 +58,9 @@
           <input
             class="input"
             type="number"
+            name="age"
             placeholder="Ej. 19"
+            [(ngModel)]="age"
           />
 
         </div>
@@ -71,8 +73,10 @@
 
           <input
             class="input"
-            type="text"
+            type="number"
+            name="weightKg"
             placeholder="Ej. 58 kg"
+            [(ngModel)]="weightKg"
           />
 
         </div>
@@ -85,17 +89,35 @@
 
           <input
             class="input"
-            type="text"
-            placeholder="Ej. 1.65 m"
+            type="number"
+            name="heightCm"
+            placeholder="Ej. 165 cm"
+            [(ngModel)]="heightCm"
           />
 
         </div>
 
+        <p
+          class="subtitle"
+          *ngIf="errorMessage"
+        >
+          {{ errorMessage }}
+        </p>
+
+        <p
+          class="subtitle"
+          *ngIf="successMessage"
+        >
+          {{ successMessage }}
+        </p>
+
         <button
           class="btn green"
           type="button"
+          (click)="guardarCambios()"
+          [disabled]="loading"
         >
-          Guardar cambios
+          {{ loading ? 'Guardando...' : 'Guardar cambios' }}
         </button>
 
       </form>
@@ -103,7 +125,8 @@
       <!-- Cerrar sesión -->
       <a
         class="small-link"
-        routerLink="/login"
+        role="button"
+        (click)="cerrarSesion()"
       >
         Cerrar sesión
       </a>

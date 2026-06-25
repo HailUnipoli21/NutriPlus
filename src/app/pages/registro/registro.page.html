@@ -43,7 +43,10 @@
       </p>
 
       <!-- Formulario -->
-      <form class="card registro-form">
+      <form
+        class="card registro-form"
+        (ngSubmit)="registrar()"
+      >
 
         <div class="field">
 
@@ -56,6 +59,9 @@
             type="text"
             placeholder="Nombre y apellido"
             autocomplete="name"
+            name="fullName"
+            [(ngModel)]="fullName"
+            required
           />
 
         </div>
@@ -71,6 +77,9 @@
             type="email"
             placeholder="tuemail@correo.com"
             autocomplete="email"
+            name="email"
+            [(ngModel)]="email"
+            required
           />
 
         </div>
@@ -86,16 +95,34 @@
             type="password"
             placeholder="Mínimo 8 caracteres"
             autocomplete="new-password"
+            name="password"
+            [(ngModel)]="password"
+            required
           />
 
         </div>
 
-        <a
-          class="btn"
-          routerLink="/home"
+        <p
+          class="subtitle"
+          *ngIf="errorMessage"
         >
-          Registrarme
-        </a>
+          {{ errorMessage }}
+        </p>
+
+        <p
+          class="subtitle"
+          *ngIf="successMessage"
+        >
+          {{ successMessage }}
+        </p>
+
+        <button
+          class="btn"
+          type="submit"
+          [disabled]="loading"
+        >
+          {{ loading ? 'Registrando...' : 'Registrarme' }}
+        </button>
 
       </form>
 

@@ -43,7 +43,10 @@
       </p>
 
       <!-- Formulario -->
-      <form class="card login-form">
+      <form
+        class="card login-form"
+        (ngSubmit)="entrar()"
+      >
 
         <div class="field">
 
@@ -54,8 +57,11 @@
           <input
             class="input"
             type="email"
+            name="email"
             placeholder="tuemail@correo.com"
             autocomplete="email"
+            [(ngModel)]="email"
+            required
           />
 
         </div>
@@ -69,18 +75,29 @@
           <input
             class="input"
             type="password"
+            name="password"
             placeholder="********"
             autocomplete="current-password"
+            [(ngModel)]="password"
+            required
           />
 
         </div>
 
-        <a
-          class="btn"
-          routerLink="/home"
+        <p
+          class="subtitle"
+          *ngIf="errorMessage"
         >
-          Entrar
-        </a>
+          {{ errorMessage }}
+        </p>
+
+        <button
+          class="btn"
+          type="submit"
+          [disabled]="loading"
+        >
+          {{ loading ? 'Ingresando...' : 'Entrar' }}
+        </button>
 
         <a
           class="small-link"

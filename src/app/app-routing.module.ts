@@ -8,52 +8,48 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'login',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
-  },
-  {
     path: 'bienvenida',
-    loadChildren: () => import('./pages/bienvenida/bienvenida.module').then( m => m.BienvenidaPageModule)
+    loadChildren: () => import('./pages/bienvenida/bienvenida.module').then(m => m.BienvenidaPageModule)
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
   {
     path: 'registro',
-    loadChildren: () => import('./pages/registro/registro.module').then( m => m.RegistroPageModule)
+    loadChildren: () => import('./pages/registro/registro.module').then(m => m.RegistroPageModule)
   },
   {
     path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
   },
   {
     path: 'sintomas',
-    loadChildren: () => import('./pages/sintomas/sintomas.module').then( m => m.SintomasPageModule)
+    loadChildren: () => import('./pages/sintomas/sintomas.module').then(m => m.SintomasPageModule)
   },
   {
     path: 'resultado',
-    loadChildren: () => import('./pages/resultado/resultado.module').then( m => m.ResultadoPageModule)
+    loadChildren: () => import('./pages/resultado/resultado.module').then(m => m.ResultadoPageModule)
   },
   {
     path: 'scan-comida',
-    loadChildren: () => import('./pages/scan-comida/scan-comida.module').then( m => m.ScanComidaPageModule)
+    loadChildren: () => import('./pages/scan-comida/scan-comida.module').then(m => m.ScanComidaPageModule)
   },
   {
     path: 'calorias',
-    loadChildren: () => import('./pages/calorias/calorias.module').then( m => m.CaloriasPageModule)
+    loadChildren: () => import('./pages/calorias/calorias.module').then(m => m.CaloriasPageModule)
   },
   {
     path: 'seguimiento',
-    loadChildren: () => import('./pages/seguimiento/seguimiento.module').then( m => m.SeguimientoPageModule)
+    loadChildren: () => import('./pages/seguimiento/seguimiento.module').then(m => m.SeguimientoPageModule)
   },
   {
     path: 'chat',
-    loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
+    loadChildren: () => import('./pages/chat/chat.module').then(m => m.ChatPageModule)
   },
   {
     path: 'perfil',
-    loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
+    loadChildren: () => import('./pages/perfil/perfil.module').then(m => m.PerfilPageModule)
   }
 ];
 @NgModule({
