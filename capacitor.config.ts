@@ -1,10 +1,10 @@
 import { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
-  appId: "io.ionic.demo.pg.cap.ng",
-  appName: "Photo Gallery Cap Ng",
+  appId: 'com.nutriplus.app',
+  appName: 'NutriPlus',
   bundledWebRuntime: false,
-  npmClient: "npm",
-  webDir: "www",
+  npmClient: 'npm',
+  webDir: 'www',
 };
 
 export default config;

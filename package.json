@@ -4,9 +4,10 @@
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/docs/angular/your-first-app",
   "scripts": {
-"ng": "ng",
-  "start": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
-  "build": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "build:prod": "ionic build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -40,6 +41,7 @@
     "@angular/compiler": "^12.0.1",
     "@angular/compiler-cli": "^12.0.1",
     "@angular/language-service": "^12.0.1",
+    "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^4.0.0",
     "@ionic/angular-toolkit": "^4.0.0",
     "@types/jasmine": "^3.5.10",
