@@ -10,7 +10,6 @@
 
     <section class="screen">
 
-      <!-- Barra superior -->
       <div class="topbar">
 
         <a
@@ -35,26 +34,33 @@
 
       </div>
 
-      <!-- Área de escaneo -->
       <div class="scan-hero">
 
         <div class="scan-frame">
 
-          <div class="scan-corners"></div>
+          <img
+            *ngIf="previewUrl"
+            [src]="previewUrl"
+            alt="Imagen seleccionada"
+            class="scan-preview"
+          />
 
-          <div class="scan-icon">
-            📷
-          </div>
+          <ng-container *ngIf="!previewUrl">
+            <div class="scan-corners"></div>
 
-          <p>
-            Coloca tu comida dentro del recuadro
-          </p>
+            <div class="scan-icon">
+              📷
+            </div>
+
+            <p>
+              Coloca tu comida dentro del recuadro
+            </p>
+          </ng-container>
 
         </div>
 
       </div>
 
-      <!-- Escanear alimento -->
       <div class="card">
 
         <h3>
@@ -62,8 +68,36 @@
         </h3>
 
         <p class="subtitle">
-          Toma una foto o sube una imagen para estimar las calorías del platillo.
+          Toma una foto o sube una imagen. Después revisa los valores antes de guardarlos.
         </p>
+
+        <div class="meal-row">
+          <div>
+            <h3>Fecha</h3>
+            <input
+              type="date"
+              [value]="logDate"
+              (change)="onLogDateChange($event)"
+            />
+          </div>
+        </div>
+
+        <div class="meal-row">
+          <div>
+            <h3>Tiempo de comida</h3>
+            <select
+              [value]="selectedMealType"
+              (change)="onMealTypeChange($event)"
+            >
+              <option
+                *ngFor="let meal of mealTypes"
+                [value]="meal.key"
+              >
+                {{ meal.label }}
+              </option>
+            </select>
+          </div>
+        </div>
 
         <label class="camera-upload">
 
@@ -71,6 +105,7 @@
             type="file"
             accept="image/*"
             capture="environment"
+            (change)="onImageSelected($event)"
           />
 
           <span>
@@ -82,74 +117,140 @@
         <button
           class="btn secondary analyze-btn"
           type="button"
+          [disabled]="isAnalyzing || !selectedFile"
+          (click)="analyzeImage()"
         >
-          Analizar imagen
+          {{ isAnalyzing ? 'Analizando...' : 'Analizar imagen' }}
         </button>
+
+        <button
+          class="btn secondary analyze-btn"
+          type="button"
+          [disabled]="isAnalyzing"
+          (click)="createManualEstimate()"
+        >
+          Registrar manualmente
+        </button>
+
+        <ion-text color="danger" *ngIf="errorMessage">
+          <p>{{ errorMessage }}</p>
+        </ion-text>
+
+        <ion-text color="success" *ngIf="successMessage">
+          <p>{{ successMessage }}</p>
+        </ion-text>
 
       </div>
 
-      <!-- Resultado estimado -->
-      <div class="card">
+      <div class="card" *ngIf="estimate">
 
         <h3>
           Resultado estimado
         </h3>
 
         <div class="meal-row">
-
           <div>
-            <h3>
-              Alimento detectado
-            </h3>
+            <h3>Alimento detectado</h3>
+            <input
+              type="text"
+              placeholder="Ej. Ensalada con pollo"
+              [value]="estimate.food_name"
+              (input)="updateEstimateText('food_name', $event)"
+            />
+          </div>
+        </div>
 
-            <p>
-              Ensalada con pollo
-            </p>
+        <div class="meal-row">
+          <div>
+            <h3>Calorías</h3>
+            <input
+              type="number"
+              min="0"
+              [value]="estimate.kcal"
+              (input)="updateEstimateNumber('kcal', $event)"
+            />
           </div>
 
           <span class="kcal">
-            430 kcal
+            {{ estimate.kcal || 0 }} kcal
           </span>
-
         </div>
 
         <div class="meal-row">
-
           <div>
-            <h3>
-              Proteína
-            </h3>
-
-            <p>
-              Aproximadamente 28 g
-            </p>
+            <h3>Proteína</h3>
+            <input
+              type="number"
+              min="0"
+              step="0.1"
+              [value]="estimate.protein_g"
+              (input)="updateEstimateNumber('protein_g', $event)"
+            />
           </div>
 
           <span class="pill">
-            Alto
+            {{ estimate.protein_g || 0 }} g
           </span>
-
         </div>
 
         <div class="meal-row">
-
           <div>
-            <h3>
-              Recomendación IA
-            </h3>
-
-            <p>
-              Buen balance, agrega agua y evita aderezos altos en azúcar.
-            </p>
+            <h3>Grasas</h3>
+            <input
+              type="number"
+              min="0"
+              step="0.1"
+              [value]="estimate.fat_g"
+              (input)="updateEstimateNumber('fat_g', $event)"
+            />
           </div>
 
+          <span class="pill">
+            {{ estimate.fat_g || 0 }} g
+          </span>
         </div>
+
+        <div class="meal-row">
+          <div>
+            <h3>Carbohidratos</h3>
+            <input
+              type="number"
+              min="0"
+              step="0.1"
+              [value]="estimate.carbs_g"
+              (input)="updateEstimateNumber('carbs_g', $event)"
+            />
+          </div>
+
+          <span class="pill">
+            {{ estimate.carbs_g || 0 }} g
+          </span>
+        </div>
+
+        <div class="meal-row">
+          <div>
+            <h3>Recomendación IA</h3>
+            <textarea
+              rows="3"
+              [value]="estimate.ai_recommendation || ''"
+              (input)="updateEstimateText('ai_recommendation', $event)"
+            ></textarea>
+          </div>
+        </div>
+
+        <button
+          class="btn secondary analyze-btn"
+          type="button"
+          [disabled]="isSaving"
+          (click)="saveFood()"
+        >
+          {{ isSaving ? 'Guardando...' : 'Guardar alimento' }}
+        </button>
 
       </div>
 
     </section>
 
-    <!-- Navegación inferior -->
     <nav class="bottom-nav scanner-nav">
 
       <a

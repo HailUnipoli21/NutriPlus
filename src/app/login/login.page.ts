@@ -121,6 +121,10 @@ export class LoginPage {
         return;
       }
 
+      if (response.data.user) {
+        localStorage.setItem('nutriplus_user', JSON.stringify(response.data.user));
+      }
+
       this.successMessage = response.data.message;
       this.router.navigateByUrl('/tabs', { replaceUrl: true });
     } catch (error) {

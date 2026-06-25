@@ -10,7 +10,6 @@
 
     <section class="screen">
 
-      <!-- Barra superior tipo app -->
       <div class="topbar">
 
         <button
@@ -24,82 +23,86 @@
 
         <div class="date-title">
           <span class="calendar-icon">▣</span>
-          <h2>Hoy</h2>
+          <h2>{{ titleDate }}</h2>
         </div>
 
         <div class="header-actions-right">
           <button
             class="header-action"
             type="button"
-            aria-label="Día siguiente"
+            aria-label="Día anterior"
+            (click)="previousDay()"
           >
-            ›
+            ‹
           </button>
 
           <button
-            class="header-action dots"
+            class="header-action"
             type="button"
-            aria-label="Opciones"
+            aria-label="Día siguiente"
+            (click)="nextDay()"
           >
-            ⋮
+            ›
           </button>
         </div>
 
       </div>
 
-      <!-- Resumen superior de macros -->
+      <ion-text color="danger" *ngIf="errorMessage">
+        <p>{{ errorMessage }}</p>
+      </ion-text>
+
+      <ion-spinner *ngIf="isLoading"></ion-spinner>
+
       <div class="macro-dashboard">
 
         <div class="macro-item carbs">
           <h3>Carbohidratos</h3>
           <div class="macro-bar">
-            <span style="width: 0%;"></span>
+            <span [style.width.%]="progress(consumed.carbs_g, target.carbs_g)"></span>
           </div>
-          <strong>0 / 238 g</strong>
+          <strong>{{ round(consumed.carbs_g) }} / {{ round(target.carbs_g) }} g</strong>
         </div>
 
         <div class="macro-item protein">
           <h3>Proteína</h3>
           <div class="macro-bar">
-            <span style="width: 0%;"></span>
+            <span [style.width.%]="progress(consumed.protein_g, target.protein_g)"></span>
           </div>
-          <strong>0 / 143 g</strong>
+          <strong>{{ round(consumed.protein_g) }} / {{ round(target.protein_g) }} g</strong>
         </div>
 
         <div class="macro-item fat">
           <h3>Grasa</h3>
           <div class="macro-bar">
-            <span style="width: 0%;"></span>
+            <span [style.width.%]="progress(consumed.fat_g, target.fat_g)"></span>
           </div>
-          <strong>0 / 42 g</strong>
+          <strong>{{ round(consumed.fat_g) }} / {{ round(target.fat_g) }} g</strong>
         </div>
 
       </div>
 
-      <!-- Barra de calorías -->
       <div class="daily-calories">
 
         <div class="calories-progress">
-          <span style="width: 0%;"></span>
+          <span [style.width.%]="progress(consumed.kcal, target.kcal)"></span>
         </div>
 
         <p>
-          <strong>0</strong> / 1900 kcal
+          <strong>{{ round(consumed.kcal) }}</strong> / {{ round(target.kcal) }} kcal
         </p>
 
       </div>
 
-      <!-- Banner interno opcional -->
       <button
         class="mini-banner"
         type="button"
         routerLink="/chat"
       >
-        <span>Usa el chatbot para estimar tus alimentos</span>
+        <span>Usa el chatbot para recomendaciones de ejercicio y alimentación</span>
         <strong>IA</strong>
       </button>
 
-      <!-- Modo / Detalles -->
       <div class="mode-row">
 
         <button
@@ -107,28 +110,31 @@
           type="button"
         >
           <span class="mode-icon">◔</span>
-          Por defecto
+          {{ selectedDate }}
         </button>
 
         <button
           class="details-btn"
           type="button"
+          (click)="loadDailySummary()"
         >
-          Detalles
+          Actualizar
         </button>
 
       </div>
 
-      <!-- Tarjetas de comidas -->
-      <section class="meal-card">
+      <section
+        class="meal-card"
+        *ngFor="let meal of meals"
+      >
 
         <div class="meal-header">
-          <h3>Desayuno</h3>
+          <h3>{{ meal.label }}</h3>
 
           <button
             class="meal-menu"
             type="button"
-            aria-label="Opciones de desayuno"
+            aria-label="Opciones"
           >
             ⋮
           </button>
@@ -137,178 +143,62 @@
         <div class="meal-macros">
 
           <div class="meal-macro carbs">
-            <strong>0 / 60</strong>
+            <strong>{{ round(meal.totals.carbs_g) }} / {{ mealTarget(meal.key, 'carbs_g') }}</strong>
             <span>Carbohidratos</span>
           </div>
 
           <div class="meal-macro protein">
-            <strong>0 / 36</strong>
+            <strong>{{ round(meal.totals.protein_g) }} / {{ mealTarget(meal.key, 'protein_g') }}</strong>
             <span>Proteína</span>
           </div>
 
           <div class="meal-macro fat">
-            <strong>0 / 11</strong>
+            <strong>{{ round(meal.totals.fat_g) }} / {{ mealTarget(meal.key, 'fat_g') }}</strong>
             <span>Grasa</span>
           </div>
 
           <div class="meal-macro kcal-box">
-            <strong>0 / 475</strong>
+            <strong>{{ round(meal.totals.kcal) }} / {{ mealTarget(meal.key, 'kcal') }}</strong>
             <span>Calorías</span>
           </div>
 
         </div>
 
-        <button
-          class="add-food"
-          type="button"
-          routerLink="/scan-comida"
+        <div
+          class="food-list"
+          *ngIf="meal.items.length > 0"
         >
-          <span>+</span>
-          Agregar alimento
-        </button>
-
-      </section>
-
-      <section class="meal-card">
-
-        <div class="meal-header">
-          <h3>Comida</h3>
-
-          <button
-            class="meal-menu"
-            type="button"
-            aria-label="Opciones de comida"
+          <div
+            class="meal-row"
+            *ngFor="let item of meal.items"
           >
-            ⋮
-          </button>
+            <div>
+              <h3>{{ item.food_name }}</h3>
+              <p>
+                {{ round(item.protein_g) }} g proteína ·
+                {{ round(item.fat_g) }} g grasa ·
+                {{ round(item.carbs_g) }} g carbohidratos
+              </p>
+            </div>
+
+            <span class="kcal">
+              {{ round(item.kcal) }} kcal
+            </span>
+          </div>
         </div>
 
-        <div class="meal-macros">
-
-          <div class="meal-macro carbs">
-            <strong>0 / 60</strong>
-            <span>Carbohidratos</span>
-          </div>
-
-          <div class="meal-macro protein">
-            <strong>0 / 36</strong>
-            <span>Proteína</span>
-          </div>
-
-          <div class="meal-macro fat">
-            <strong>0 / 11</strong>
-            <span>Grasa</span>
-          </div>
-
-          <div class="meal-macro kcal-box">
-            <strong>0 / 475</strong>
-            <span>Calorías</span>
-          </div>
-
-        </div>
-
-        <button
-          class="add-food"
-          type="button"
-          routerLink="/scan-comida"
+        <p
+          class="subtitle"
+          *ngIf="meal.items.length === 0"
         >
-          <span>+</span>
-          Agregar alimento
-        </button>
-
-      </section>
-
-      <section class="meal-card">
-
-        <div class="meal-header">
-          <h3>Cena</h3>
-
-          <button
-            class="meal-menu"
-            type="button"
-            aria-label="Opciones de cena"
-          >
-            ⋮
-          </button>
-        </div>
-
-        <div class="meal-macros">
-
-          <div class="meal-macro carbs">
-            <strong>0 / 60</strong>
-            <span>Carbohidratos</span>
-          </div>
-
-          <div class="meal-macro protein">
-            <strong>0 / 36</strong>
-            <span>Proteína</span>
-          </div>
-
-          <div class="meal-macro fat">
-            <strong>0 / 11</strong>
-            <span>Grasa</span>
-          </div>
-
-          <div class="meal-macro kcal-box">
-            <strong>0 / 475</strong>
-            <span>Calorías</span>
-          </div>
-
-        </div>
+          Sin alimentos registrados.
+        </p>
 
         <button
           class="add-food"
           type="button"
           routerLink="/scan-comida"
-        >
-          <span>+</span>
-          Agregar alimento
-        </button>
-
-      </section>
-
-      <section class="meal-card">
-
-        <div class="meal-header">
-          <h3>Snacks</h3>
-
-          <button
-            class="meal-menu"
-            type="button"
-            aria-label="Opciones de snacks"
-          >
-            ⋮
-          </button>
-        </div>
-
-        <div class="meal-macros">
-
-          <div class="meal-macro carbs">
-            <strong>0 / 58</strong>
-            <span>Carbohidratos</span>
-          </div>
-
-          <div class="meal-macro protein">
-            <strong>0 / 35</strong>
-            <span>Proteína</span>
-          </div>
-
-          <div class="meal-macro fat">
-            <strong>0 / 9</strong>
-            <span>Grasa</span>
-          </div>
-
-          <div class="meal-macro kcal-box">
-            <strong>0 / 475</strong>
-            <span>Calorías</span>
-          </div>
-
-        </div>
-
-        <button
-          class="add-food"
-          type="button"
-          routerLink="/scan-comida"
+          [queryParams]="{ meal_type: meal.key, date: selectedDate }"
         >
           <span>+</span>
           Agregar alimento
@@ -318,7 +208,6 @@
 
     </section>
 
-    <!-- Navegación inferior -->
     <nav class="bottom-nav scanner-nav">
 
       <a

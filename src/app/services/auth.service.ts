@@ -3,11 +3,26 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
+type BiologicalSex = 'male' | 'female' | null;
+type ActivityLevel = 'sedentary' | 'light' | 'moderate' | 'high' | 'very_high' | null;
+type Goal = 'lose_weight' | 'maintain_weight' | 'gain_muscle' | null;
+type WeightLossPace = 'slow' | 'moderate' | 'fast' | null;
+
 interface LoginResponse {
   ok: boolean;
   message: string;
   token: string;
   user: any;
+}
+
+interface ProfileUpdateData {
+  age: number | null;
+  biologicalSex: BiologicalSex;
+  weightKg: number | null;
+  heightCm: number | null;
+  activityLevel: ActivityLevel;
+  goal: Goal;
+  weightLossPace: WeightLossPace;
 }
 
 @Injectable({
@@ -46,11 +61,7 @@ export class AuthService {
     );
   }
 
-  updateProfile(profile: {
-    age: number | null;
-    weightKg: number | null;
-    heightCm: number | null;
-  }) {
+  updateProfile(profile: ProfileUpdateData) {
     return this.http.put<any>(
       `${environment.apiUrl}/profile_update.php`,
       profile,

@@ -59,6 +59,8 @@
             class="input"
             type="number"
             name="age"
+            min="1"
+            max="120"
             placeholder="Ej. 19"
             [(ngModel)]="age"
           />
@@ -68,13 +70,41 @@
         <div class="field">
 
           <label>
-            Peso
+            Sexo biológico
+          </label>
+
+          <select
+            class="input"
+            name="biologicalSex"
+            [(ngModel)]="biologicalSex"
+          >
+            <option [ngValue]="null">
+              Selecciona una opción
+            </option>
+
+            <option value="male">
+              Hombre
+            </option>
+
+            <option value="female">
+              Mujer
+            </option>
+          </select>
+
+        </div>
+
+        <div class="field">
+
+          <label>
+            Peso actual
           </label>
 
           <input
             class="input"
             type="number"
             name="weightKg"
+            min="1"
+            step="0.1"
             placeholder="Ej. 58 kg"
             [(ngModel)]="weightKg"
           />
@@ -91,11 +121,122 @@
             class="input"
             type="number"
             name="heightCm"
+            min="1"
+            step="0.1"
             placeholder="Ej. 165 cm"
             [(ngModel)]="heightCm"
           />
 
         </div>
+
+        <div class="field">
+
+          <label>
+            Nivel de actividad diaria
+          </label>
+
+          <select
+            class="input"
+            name="activityLevel"
+            [(ngModel)]="activityLevel"
+          >
+            <option [ngValue]="null">
+              Selecciona una opción
+            </option>
+
+            <option value="sedentary">
+              Sedentario
+            </option>
+
+            <option value="light">
+              Actividad ligera
+            </option>
+
+            <option value="moderate">
+              Actividad moderada
+            </option>
+
+            <option value="high">
+              Actividad alta
+            </option>
+
+            <option value="very_high">
+              Actividad muy alta
+            </option>
+          </select>
+
+        </div>
+
+        <div class="field">
+
+          <label>
+            Objetivo
+          </label>
+
+          <select
+            class="input"
+            name="goal"
+            [(ngModel)]="goal"
+            (ngModelChange)="onGoalChange($event)"
+          >
+            <option [ngValue]="null">
+              Selecciona una opción
+            </option>
+
+            <option value="lose_weight">
+              Bajar de peso
+            </option>
+
+            <option value="maintain_weight">
+              Mantener peso
+            </option>
+
+            <option value="gain_muscle">
+              Ganar masa muscular
+            </option>
+          </select>
+
+        </div>
+
+        <div
+          class="field"
+          *ngIf="goal === 'lose_weight'"
+        >
+
+          <label>
+            Ritmo deseado de pérdida de peso
+          </label>
+
+          <select
+            class="input"
+            name="weightLossPace"
+            [(ngModel)]="weightLossPace"
+          >
+            <option [ngValue]="null">
+              Selecciona una opción
+            </option>
+
+            <option value="slow">
+              Lento
+            </option>
+
+            <option value="moderate">
+              Moderado
+            </option>
+
+            <option value="fast">
+              Rápido
+            </option>
+          </select>
+
+        </div>
+
+        <p
+          class="subtitle"
+          *ngIf="goal && goal !== 'lose_weight'"
+        >
+          El ritmo de pérdida de peso solo aplica cuando el objetivo es bajar de peso.
+        </p>
 
         <p
           class="subtitle"
