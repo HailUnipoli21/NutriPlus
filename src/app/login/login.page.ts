@@ -21,6 +21,7 @@ interface LoginResponse {
 })
 export class LoginPage {
   private readonly apiIpStorageKey = '9amm_api_ip';
+  private readonly defaultApiBaseUrl = 'https://nutriplusjp.alwaysdata.net/nutriplus_api';
 
   apiIp = localStorage.getItem(this.apiIpStorageKey) || '';
   username = '';

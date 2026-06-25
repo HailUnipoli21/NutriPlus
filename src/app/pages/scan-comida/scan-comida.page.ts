@@ -9,10 +9,11 @@ import { FoodEstimate, MealType, NutritionService } from '../../services/nutriti
 })
 export class ScanComidaPage implements OnInit {
   selectedFile?: File;
-  previewUrl?: string;
+  selectedFileName = '';
+
   estimate?: FoodEstimate;
 
-  selectedMealType: MealType = 'lunch';
+  selectedMealType: MealType = 'comida';
   logDate = this.todayIso();
 
   isAnalyzing = false;
@@ -21,10 +22,10 @@ export class ScanComidaPage implements OnInit {
   successMessage = '';
 
   readonly mealTypes: Array<{ key: MealType; label: string }> = [
-    { key: 'breakfast', label: 'Desayuno' },
-    { key: 'lunch', label: 'Comida' },
-    { key: 'dinner', label: 'Cena' },
-    { key: 'snack', label: 'Snacks' }
+    { key: 'desayuno', label: 'Desayuno' },
+    { key: 'comida', label: 'Comida' },
+    { key: 'cena', label: 'Cena' },
+    { key: 'snacks', label: 'Snacks' }
   ];
 
   constructor(
@@ -35,10 +36,10 @@ export class ScanComidaPage implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(params => {
-      const mealType = params.get('meal_type') as MealType | null;
+      const mealType = this.normalizeMealType(params.get('meal_type'));
       const date = params.get('date');
 
-      if (mealType && this.mealTypes.some(meal => meal.key === mealType)) {
+      if (mealType) {
         this.selectedMealType = mealType;
       }
 
@@ -55,6 +56,8 @@ export class ScanComidaPage implements OnInit {
     this.errorMessage = '';
     this.successMessage = '';
     this.estimate = undefined;
+    this.selectedFile = undefined;
+    this.selectedFileName = '';
 
     if (!file) {
       return;
@@ -62,24 +65,20 @@ export class ScanComidaPage implements OnInit {
 
     if (!file.type.startsWith('image/')) {
       this.errorMessage = 'Selecciona una imagen válida.';
+      input.value = '';
       return;
     }
 
     this.selectedFile = file;
-
-    if (this.previewUrl) {
-      URL.revokeObjectURL(this.previewUrl);
-    }
-
-    this.previewUrl = URL.createObjectURL(file);
+    this.selectedFileName = file.name;
   }
 
   onMealTypeChange(event: Event): void {
     const select = event.target as HTMLSelectElement;
-    const value = select.value as MealType;
+    const mealType = this.normalizeMealType(select.value);
 
-    if (this.mealTypes.some(meal => meal.key === value)) {
-      this.selectedMealType = value;
+    if (mealType) {
+      this.selectedMealType = mealType;
     }
   }
 
@@ -105,8 +104,17 @@ export class ScanComidaPage implements OnInit {
     try {
       this.estimate = await this.nutritionService.analyzeFoodImage(this.selectedFile);
 
+      /*
+        La foto se usa una sola vez:
+        1. Se envía al backend para análisis temporal.
+        2. No se guarda en MySQL.
+        3. No se conserva como preview/blob en el frontend.
+      */
+      this.selectedFile = undefined;
+      this.selectedFileName = '';
+
       if (!this.estimate.food_name || this.estimate.food_name === 'Alimento por confirmar') {
-        this.successMessage = 'Imagen cargada. Completa o corrige los valores antes de guardar.';
+        this.successMessage = 'Imagen analizada. Completa o corrige los valores antes de guardar.';
       } else {
         this.successMessage = 'Imagen analizada. Revisa los valores antes de guardar.';
       }
@@ -172,11 +180,11 @@ export class ScanComidaPage implements OnInit {
         fat_g: Number(this.estimate.fat_g || 0),
         carbs_g: Number(this.estimate.carbs_g || 0),
         source: 'scanner',
-        image_path: this.estimate.image_path || null,
         ai_recommendation: this.estimate.ai_recommendation || null
       });
 
       this.successMessage = 'Alimento guardado correctamente.';
+
       await this.router.navigate(['/calorias'], {
         queryParams: {
           date: this.logDate
@@ -195,15 +203,37 @@ export class ScanComidaPage implements OnInit {
     this.errorMessage = '';
     this.successMessage = 'Completa los valores del alimento y guárdalo.';
 
+    this.selectedFile = undefined;
+    this.selectedFileName = '';
+
     this.estimate = {
       food_name: '',
       kcal: 0,
       protein_g: 0,
       fat_g: 0,
       carbs_g: 0,
-      image_path: null,
       ai_recommendation: ''
     };
+  }
+
+  private normalizeMealType(value: string | null): MealType | null {
+    const normalized = String(value || '').trim().toLowerCase();
+
+    const map: Record<string, MealType> = {
+      desayuno: 'desayuno',
+      breakfast: 'desayuno',
+
+      comida: 'comida',
+      lunch: 'comida',
+
+      cena: 'cena',
+      dinner: 'cena',
+
+      snacks: 'snacks',
+      snack: 'snacks'
+    };
+
+    return map[normalized] || null;
   }
 
   private todayIso(): string {

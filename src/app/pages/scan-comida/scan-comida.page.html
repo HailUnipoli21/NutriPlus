@@ -38,24 +38,15 @@
 
         <div class="scan-frame">
 
-          <img
-            *ngIf="previewUrl"
-            [src]="previewUrl"
-            alt="Imagen seleccionada"
-            class="scan-preview"
-          />
+          <div class="scan-corners"></div>
 
-          <ng-container *ngIf="!previewUrl">
-            <div class="scan-corners"></div>
+          <div class="scan-icon">
+            📷
+          </div>
 
-            <div class="scan-icon">
-              📷
-            </div>
-
-            <p>
-              Coloca tu comida dentro del recuadro
-            </p>
-          </ng-container>
+          <p>
+            Coloca tu comida dentro del recuadro
+          </p>
 
         </div>
 

@@ -15,10 +15,10 @@ export class CaloriasPage implements OnInit {
   errorMessage = '';
 
   readonly mealDistribution: Record<MealType, number> = {
-    breakfast: 0.25,
-    lunch: 0.35,
-    dinner: 0.30,
-    snack: 0.10
+    desayuno: 0.25,
+    comida: 0.35,
+    cena: 0.30,
+    snacks: 0.10
   };
 
   constructor(
@@ -105,11 +105,15 @@ export class CaloriasPage implements OnInit {
   }
 
   get meals(): MealSummary[] {
-    return this.summary?.meals || [
-      { key: 'breakfast', label: 'Desayuno', totals: this.emptyTotals(), items: [] },
-      { key: 'lunch', label: 'Comida', totals: this.emptyTotals(), items: [] },
-      { key: 'dinner', label: 'Cena', totals: this.emptyTotals(), items: [] },
-      { key: 'snack', label: 'Snacks', totals: this.emptyTotals(), items: [] }
+    if (this.summary?.meals?.length) {
+      return this.summary.meals;
+    }
+
+    return [
+      this.emptyMeal('desayuno', 'Desayuno'),
+      this.emptyMeal('comida', 'Comida'),
+      this.emptyMeal('cena', 'Cena'),
+      this.emptyMeal('snacks', 'Snacks')
     ];
   }
 
@@ -138,6 +142,21 @@ export class CaloriasPage implements OnInit {
       protein_g: 0,
       fat_g: 0,
       carbs_g: 0
+    };
+  }
+
+  private emptyMeal(key: MealType, label: string): MealSummary {
+    return {
+      meal_type: key,
+      key,
+      label,
+      kcal: 0,
+      protein_g: 0,
+      fat_g: 0,
+      carbs_g: 0,
+      items_count: 0,
+      totals: this.emptyTotals(),
+      items: []
     };
   }
 
