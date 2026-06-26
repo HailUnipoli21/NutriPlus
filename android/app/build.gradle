@@ -1,7 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
+    namespace "com.nutriplus.app"
+
     compileSdkVersion rootProject.ext.compileSdkVersion
+
     defaultConfig {
         applicationId "com.nutriplus.app"
         minSdkVersion rootProject.ext.minSdkVersion

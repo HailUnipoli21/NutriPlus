@@ -1,7 +1,5 @@
 {
 	"appId": "com.nutriplus.app",
 	"appName": "NutriPlus",
-	"bundledWebRuntime": false,
-	"npmClient": "npm",
 	"webDir": "www"
 }
