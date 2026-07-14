@@ -10,6 +10,7 @@
 
     <section class="screen">
 
+      <!-- Barra superior -->
       <div class="topbar">
 
         <button
@@ -22,8 +23,8 @@
         </button>
 
         <div class="date-title">
-          <span class="calendar-icon">▣</span>
           <h2>{{ titleDate }}</h2>
+          <span class="dropdown-arrow">▼</span>
         </div>
 
         <div class="header-actions-right">
@@ -48,120 +49,100 @@
 
       </div>
 
+      <!-- Tiras de días calendario (Dinámico e interactivo) -->
+      <div class="calendar-days-strip">
+        <div
+          *ngFor="let day of calendarDays"
+          class="day-item"
+          [class.active]="day.isoDate === selectedDate"
+          (click)="selectCalendarDate(day.isoDate)"
+        >
+          <span class="day-lbl">{{ day.label }}</span>
+          <span class="day-num">{{ day.dayNumber }}</span>
+          <span class="day-dot"></span>
+        </div>
+      </div>
+
+
       <ion-text color="danger" *ngIf="errorMessage">
-        <p>{{ errorMessage }}</p>
+        <p class="error-msg">{{ errorMessage }}</p>
       </ion-text>
 
-      <ion-spinner *ngIf="isLoading"></ion-spinner>
+      <div class="spinner-container" *ngIf="isLoading">
+        <ion-spinner></ion-spinner>
+      </div>
 
-      <div class="macro-dashboard">
+      <!-- Tarjeta principal de Calorías -->
+      <div class="card main-calories-card">
 
-        <div class="macro-item carbs">
-          <h3>Carbohidratos</h3>
-          <div class="macro-bar">
-            <span [style.width.%]="progress(consumed.carbs_g, target.carbs_g)"></span>
+        <div class="card-header-actions">
+          <span class="edit-pen">✏️</span>
+          <div class="calories-count">
+            <h3>{{ round(consumed.kcal) }} / {{ round(target.kcal) }}</h3>
+            <span>kcal</span>
           </div>
-          <strong>{{ round(consumed.carbs_g) }} / {{ round(target.carbs_g) }} g</strong>
+          <span class="more-options">···</span>
         </div>
 
-        <div class="macro-item protein">
-          <h3>Proteína</h3>
-          <div class="macro-bar">
-            <span [style.width.%]="progress(consumed.protein_g, target.protein_g)"></span>
+        <!-- Arco de calorías -->
+        <div class="arc-container">
+          <svg viewBox="0 0 200 110" class="gauge-svg">
+            <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#2c2c2e" stroke-width="12" stroke-linecap="round" />
+            <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#b58fd5" stroke-width="12" stroke-linecap="round"
+                  [attr.stroke-dasharray]="251"
+                  [attr.stroke-dashoffset]="251 - (251 * progress(consumed.kcal, target.kcal) / 100)" />
+          </svg>
+          <div class="arc-labels">
+            <span class="lbl-min">0</span>
+            <span class="lbl-max">{{ round(target.kcal) }}</span>
           </div>
-          <strong>{{ round(consumed.protein_g) }} / {{ round(target.protein_g) }} g</strong>
         </div>
 
-        <div class="macro-item fat">
-          <h3>Grasa</h3>
-          <div class="macro-bar">
-            <span [style.width.%]="progress(consumed.fat_g, target.fat_g)"></span>
+        <!-- Desglose de macronutrientes -->
+        <div class="macros-row">
+          <div class="macro-col">
+            <span class="macro-name">Proteínas</span>
+            <strong class="macro-val">{{ round(consumed.protein_g) }} / {{ round(target.protein_g) }} g</strong>
           </div>
-          <strong>{{ round(consumed.fat_g) }} / {{ round(target.fat_g) }} g</strong>
+          <div class="macro-col">
+            <span class="macro-name">Carbs</span>
+            <strong class="macro-val">{{ round(consumed.carbs_g) }} / {{ round(target.carbs_g) }} g</strong>
+          </div>
+          <div class="macro-col">
+            <span class="macro-name">Grasas</span>
+            <strong class="macro-val">{{ round(consumed.fat_g) }} / {{ round(target.fat_g) }} g</strong>
+          </div>
         </div>
 
       </div>
 
-      <div class="daily-calories">
-
-        <div class="calories-progress">
-          <span [style.width.%]="progress(consumed.kcal, target.kcal)"></span>
-        </div>
-
-        <p>
-          <strong>{{ round(consumed.kcal) }}</strong> / {{ round(target.kcal) }} kcal
-        </p>
-
+      <!-- Indicadores de página -->
+      <div class="pager-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
       </div>
 
-      <button
-        class="mini-banner"
-        type="button"
-        routerLink="/chat"
-      >
-        <span>Usa el chatbot para recomendaciones de ejercicio y alimentación</span>
-        <strong>IA</strong>
-      </button>
-
-      <div class="mode-row">
-
-        <button
-          class="mode-btn"
-          type="button"
-        >
-          <span class="mode-icon">◔</span>
-          {{ selectedDate }}
-        </button>
-
-        <button
-          class="details-btn"
-          type="button"
-          (click)="loadDailySummary()"
-        >
-          Actualizar
-        </button>
-
-      </div>
-
+      <!-- Tarjetas de comida -->
       <section
         class="meal-card"
         *ngFor="let meal of meals"
       >
 
         <div class="meal-header">
-          <h3>{{ meal.label }}</h3>
+          <div class="meal-title-group">
+            <h3>{{ meal.label }}</h3>
+            <span class="meal-sub-totals">
+              🔥 {{ round(meal.totals.kcal) }} kcal · {{ round(meal.totals.protein_g) }}P | {{ round(meal.totals.carbs_g) }}C | {{ round(meal.totals.fat_g) }}G
+            </span>
+          </div>
 
           <button
             class="meal-menu"
             type="button"
             aria-label="Opciones"
           >
-            ⋮
+            ···
           </button>
-        </div>
-
-        <div class="meal-macros">
-
-          <div class="meal-macro carbs">
-            <strong>{{ round(meal.totals.carbs_g) }} / {{ mealTarget(meal.key, 'carbs_g') }}</strong>
-            <span>Carbohidratos</span>
-          </div>
-
-          <div class="meal-macro protein">
-            <strong>{{ round(meal.totals.protein_g) }} / {{ mealTarget(meal.key, 'protein_g') }}</strong>
-            <span>Proteína</span>
-          </div>
-
-          <div class="meal-macro fat">
-            <strong>{{ round(meal.totals.fat_g) }} / {{ mealTarget(meal.key, 'fat_g') }}</strong>
-            <span>Grasa</span>
-          </div>
-
-          <div class="meal-macro kcal-box">
-            <strong>{{ round(meal.totals.kcal) }} / {{ mealTarget(meal.key, 'kcal') }}</strong>
-            <span>Calorías</span>
-          </div>
-
         </div>
 
         <div
@@ -187,34 +168,29 @@
           </div>
         </div>
 
-        <p
-          class="subtitle"
-          *ngIf="meal.items.length === 0"
-        >
-          Sin alimentos registrados.
-        </p>
-
-        <button
-          class="add-food"
-          type="button"
-          routerLink="/scan-comida"
-          [queryParams]="{ meal_type: meal.key, date: selectedDate }"
-        >
-          <span>+</span>
-          Agregar alimento
-        </button>
+        <div class="meal-action-wrapper">
+          <button
+            class="add-food-btn"
+            type="button"
+            routerLink="/scan-comida"
+            [queryParams]="{ meal_type: meal.key, date: selectedDate }"
+          >
+            +
+          </button>
+        </div>
 
       </section>
 
+
     </section>
 
-    <nav class="bottom-nav scanner-nav">
+     <nav class="bottom-nav scanner-nav">
 
       <a
         class="nav-item"
         routerLink="/home"
       >
-        <span>⌂</span>
+        <ion-icon name="home-outline"></ion-icon>
         Inicio
       </a>
 
@@ -222,31 +198,31 @@
         class="nav-item"
         routerLink="/chat"
       >
-        <span>◌</span>
+        <ion-icon name="chatbubble-outline"></ion-icon>
         Chat
       </a>
 
       <a
-        class="camera-nav active"
-        routerLink="/calorias"
-        aria-label="Calorías"
+        class="camera-nav"
+        routerLink="/scan-comida"
+        aria-label="Escáner"
       >
-        <span>▣</span>
+        <ion-icon name="scan-outline"></ion-icon>
       </a>
 
       <a
-        class="nav-item"
-        routerLink="/scan-comida"
+        class="nav-item active"
+        routerLink="/calorias"
       >
-        <span>▤</span>
-        Escáner
+        <ion-icon name="flame-outline"></ion-icon>
+        Calorías
       </a>
 
       <a
         class="nav-item"
         routerLink="/perfil"
       >
-        <span>⚙</span>
+        <ion-icon name="person-outline"></ion-icon>
         Perfil
       </a>
 

@@ -67,6 +67,39 @@ export class CaloriasPage implements OnInit {
     this.loadDailySummary();
   }
 
+  selectCalendarDate(isoDate: string): void {
+    this.selectedDate = isoDate;
+    this.loadDailySummary();
+  }
+
+  get calendarDays(): Array<{ label: string; dayNumber: number; isoDate: string }> {
+    const days: Array<{ label: string; dayNumber: number; isoDate: string }> = [];
+    const labels = ['D', 'L', 'M', 'M', 'J', 'V', 'S']; // Sunday to Saturday in JS getDay()
+
+    // Find the Monday of the week containing selectedDate
+    const current = new Date(`${this.selectedDate}T00:00:00`);
+    const dayOfWeek = current.getDay();
+    const diffToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+    
+    const monday = new Date(current);
+    monday.setDate(current.getDate() + diffToMonday);
+
+    for (let i = 0; i < 7; i++) {
+      const day = new Date(monday);
+      day.setDate(monday.getDate() + i);
+      const iso = day.toISOString().slice(0, 10);
+      const dayNum = day.getDate();
+      const label = labels[day.getDay()];
+
+      days.push({
+        label,
+        dayNumber: dayNum,
+        isoDate: iso,
+      });
+    }
+    return days;
+  }
+
   get titleDate(): string {
     const today = this.todayIso();
     const yesterday = this.shiftDate(today, -1);

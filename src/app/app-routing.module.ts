@@ -24,24 +24,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
   },
   {
-    path: 'sintomas',
-    loadChildren: () => import('./pages/sintomas/sintomas.module').then(m => m.SintomasPageModule)
-  },
-  {
-    path: 'resultado',
-    loadChildren: () => import('./pages/resultado/resultado.module').then(m => m.ResultadoPageModule)
-  },
-  {
     path: 'scan-comida',
     loadChildren: () => import('./pages/scan-comida/scan-comida.module').then(m => m.ScanComidaPageModule)
   },
   {
     path: 'calorias',
     loadChildren: () => import('./pages/calorias/calorias.module').then(m => m.CaloriasPageModule)
-  },
-  {
-    path: 'seguimiento',
-    loadChildren: () => import('./pages/seguimiento/seguimiento.module').then(m => m.SeguimientoPageModule)
   },
   {
     path: 'chat',

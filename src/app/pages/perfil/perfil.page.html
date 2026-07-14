@@ -37,7 +37,7 @@
         </div>
 
         <h2>
-          {{ fullName || 'Usuario Salud IA' }}
+          {{ fullName || 'Usuario NutriPlus' }}
         </h2>
 
         <p class="muted">
@@ -231,22 +231,16 @@
 
         </div>
 
-        <p
-          class="subtitle"
-          *ngIf="goal && goal !== 'lose_weight'"
-        >
-          El ritmo de pérdida de peso solo aplica cuando el objetivo es bajar de peso.
-        </p>
 
         <p
-          class="subtitle"
+          class="profile-message error"
           *ngIf="errorMessage"
         >
           {{ errorMessage }}
         </p>
 
         <p
-          class="subtitle"
+          class="profile-message success"
           *ngIf="successMessage"
         >
           {{ successMessage }}
@@ -264,13 +258,13 @@
       </form>
 
       <!-- Cerrar sesión -->
-      <a
-        class="small-link"
-        role="button"
+      <button
+        class="btn logout-btn"
+        type="button"
         (click)="cerrarSesion()"
       >
         Cerrar sesión
-      </a>
+      </button>
 
     </section>
 
@@ -281,7 +275,7 @@
         class="nav-item"
         routerLink="/home"
       >
-        <span>🏠</span>
+        <ion-icon name="home-outline"></ion-icon>
         Inicio
       </a>
 
@@ -289,23 +283,23 @@
         class="nav-item"
         routerLink="/chat"
       >
-        <span>💬</span>
+        <ion-icon name="chatbubble-outline"></ion-icon>
         Chat
       </a>
 
       <a
         class="camera-nav"
         routerLink="/scan-comida"
-        aria-label="Escanear comida"
+        aria-label="Escáner"
       >
-        <span>📷</span>
+        <ion-icon name="scan-outline"></ion-icon>
       </a>
 
       <a
         class="nav-item"
         routerLink="/calorias"
       >
-        <span>🔥</span>
+        <ion-icon name="flame-outline"></ion-icon>
         Calorías
       </a>
 
@@ -313,7 +307,7 @@
         class="nav-item active"
         routerLink="/perfil"
       >
-        <span>👤</span>
+        <ion-icon name="person-outline"></ion-icon>
         Perfil
       </a>
 

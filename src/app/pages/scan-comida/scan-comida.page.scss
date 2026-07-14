@@ -1,39 +1,36 @@
 // Variables
-$bg: #05040a;
-$bg-soft: #0b0714;
-$card: #12101b;
-$card-2: #191426;
+$bg: #000000;
+$bg-soft: #121214;
+$card: #1c1c1e;
+$card-2: #2c2c2e;
 
-$primary: #b76cff;
-$primary-dark: #8a2be2;
-$secondary: #e2b8ff;
+$primary: #7b609e;
+$primary-dark: #4f3c63;
+$secondary: #a897bf;
 
-$accent: #7c3aed;
-$accent-2: #d946ef;
+$accent: #5e4778;
+$accent-2: #38244d;
 
-$text: #f7f2ff;
-$muted: #b9a9cb;
+$text: #ffffff;
+$muted: #8e8e93;
 
-$line: rgba(226, 184, 255, .16);
+$line: rgba(110, 86, 143, 0.08);
 
 $danger: #ff6b9c;
 $warning: #f6c177;
 
-$radius: 22px;
-$shadow: 0 18px 42px rgba(0,0,0,.42);
-$glow: 0 0 26px rgba(183,108,255,.28);
+$radius: 20px;
+$shadow: none;
+$glow: none;
 
 // Ionic
 ion-toolbar {
-  --background: #090613;
-  --color: #f7f2ff;
+  --background: #000000;
+  --color: #ffffff;
 }
 
 ion-content {
-  --background:
-    radial-gradient(circle at 18% 8%, rgba(217,70,239,.20), transparent 28%),
-    radial-gradient(circle at 92% 22%, rgba(124,58,237,.22), transparent 30%),
-    linear-gradient(180deg, #05040a 0%, #0b0714 48%, #05040a 100%);
+  --background: #000000;
 }
 
 // Reset
@@ -55,9 +52,7 @@ a {
 
   margin: 24px auto;
 
-  background:
-    radial-gradient(circle at top right, rgba(183,108,255,.22), transparent 28%),
-    linear-gradient(180deg, #090613 0%, $bg 100%);
+  background: #000000;
 
   border-radius: 34px;
   box-shadow: 0 28px 70px rgba(0,0,0,.70);
@@ -65,7 +60,7 @@ a {
   overflow: hidden;
   position: relative;
 
-  border: 10px solid #000;
+  border: 10px solid #1c1c1e;
 }
 
 // Pantalla
@@ -465,15 +460,14 @@ a {
 
   min-width: 58px;
 
-  span {
+  ion-icon {
     display: block;
-    font-size: 19px;
-    margin-bottom: 4px;
+    font-size: 22px;
+    margin: 0 auto 4px;
   }
 
   &.active {
     color: $secondary;
-    text-shadow: 0 0 16px rgba(226,184,255,.45);
   }
 }
 
@@ -499,25 +493,19 @@ a {
 
   color: #fff;
 
-  box-shadow:
-    0 16px 38px rgba(183,108,255,.44),
-    0 0 0 8px rgba(5,4,10,.95);
+  box-shadow: none;
 
-  border: 1px solid rgba(226,184,255,.36);
+  border: 1px solid rgba(123, 96, 158, 0.36);
 
   transform: translateY(-2px);
 
-  span {
+  ion-icon {
     font-size: 28px;
     display: block;
-    line-height: 1;
   }
 
   &.active {
-    box-shadow:
-      0 18px 42px rgba(217,70,239,.55),
-      0 0 0 8px rgba(5,4,10,.95),
-      0 0 30px rgba(226,184,255,.35);
+    border-color: $primary;
   }
 }
 
@@ -555,3 +543,48 @@ a {
     position: fixed;
   }
 }
+
+// Estilos de inputs personalizados
+input,
+select,
+textarea {
+  width: 100%;
+  max-width: 100%;
+  margin-top: 8px;
+  padding: 12px 16px;
+  background-color: #000000;
+  color: #a897bf; /* $secondary */
+  border: 1px solid rgba(123, 96, 158, 0.25);
+  border-radius: 12px;
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+  box-sizing: border-box;
+  resize: vertical;
+
+  &::placeholder {
+    color: #5a4a75;
+  }
+
+  &:focus {
+    border-color: #7b609e; /* $primary */
+    box-shadow: 0 0 0 2px rgba(123, 96, 158, 0.15);
+  }
+}
+
+.meal-row > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Prevents input/textarea overflow in flex container */
+}
+
+.scan-message {
+  text-align: center;
+  margin-top: 38px !important; /* ~1cm despegado del botón */
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  display: block;
+}
+
