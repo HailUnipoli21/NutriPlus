@@ -49,9 +49,31 @@ export class CaloriasPage implements OnInit {
     try {
       this.summary = await this.nutritionService.getDailySummary(this.selectedDate);
     } catch (error) {
-      this.errorMessage = error instanceof Error
-        ? error.message
-        : 'Error desconocido al consultar calorías.';
+      const originalMessage = error instanceof Error ? error.message : '';
+      const lowerMsg = originalMessage.toLowerCase();
+      const isProfileError = lowerMsg.includes('perfil') ||
+        lowerMsg.includes('completar') ||
+        lowerMsg.includes('peso') ||
+        lowerMsg.includes('altura') ||
+        lowerMsg.includes('edad') ||
+        lowerMsg.includes('sexo') ||
+        lowerMsg.includes('actividad') ||
+        lowerMsg.includes('objetivo') ||
+        lowerMsg.includes('weight') ||
+        lowerMsg.includes('height') ||
+        lowerMsg.includes('age') ||
+        lowerMsg.includes('gender') ||
+        lowerMsg.includes('activity') ||
+        lowerMsg.includes('goal') ||
+        lowerMsg.includes('tdee') ||
+        lowerMsg.includes('bmr') ||
+        lowerMsg.includes('target');
+
+      if (isProfileError) {
+        this.errorMessage = 'Aun falta datos que rellenar en perfil';
+      } else {
+        this.errorMessage = originalMessage || 'Error desconocido al consultar calorías.';
+      }
     } finally {
       this.isLoading = false;
     }

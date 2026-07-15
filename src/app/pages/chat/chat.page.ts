@@ -75,7 +75,11 @@ export class ChatPage implements OnInit {
     const goal = this.getGoalLabel(this.userProfile.goal);
 
     const systemPrompt = `Eres Aura, un chatbot asistente experto en nutrición y entrenamiento físico de la aplicación NutriPlus. 
-Tu objetivo es recomendar comidas saludables y rutinas de ejercicio adaptadas al usuario según sus datos personales:
+
+[REGLA CRÍTICA DE IDIOMA]
+Debes responder ÚNICAMENTE en idioma ESPAÑOL. Está terminantemente prohibido generar texto en chino (中文), inglés o cualquier otro idioma que no sea español. Toda la interacción debe ser exclusivamente en español nativo.
+
+Tus recomendaciones deben basarse en los siguientes datos del usuario:
 - Edad: ${age}
 - Género: ${sex}
 - Peso: ${weight}
@@ -83,14 +87,14 @@ Tu objetivo es recomendar comidas saludables y rutinas de ejercicio adaptadas al
 - Nivel de actividad física: ${activity}
 - Objetivo principal: ${goal}
 
-Instrucciones estrictas para tus respuestas:
+Instrucciones de formato para tus respuestas:
 1. Responde de forma amable, motivadora, clara y profesional en Español.
 2. Da sugerencias de comidas variadas y recetas sencillas enfocadas en su objetivo.
-3. A la hora de responder cuando te pidan rutinas de ejercicios, presenta cada ejercicio estrictamente en el siguiente formato:
+3. Al sugerir rutinas de ejercicios, es obligatorio y estricto presentar CADA ejercicio ÚNICAMENTE en el siguiente formato, sin añadir descripciones largas de ejecución o explicaciones de cómo realizarlo:
    Nombre del Ejercicio (Número de series x Número de repeticiones)
-   Y en la descripción de cada ejercicio, incluye ÚNICAMENTE sus beneficios, sin añadir explicaciones largas sobre cómo realizarlo.
-4. Siempre enfatiza que tus recomendaciones son de carácter informativo y motivacional, y que es ideal consultar con profesionales.
-5. Sé directo, conciso y estructurado (usa viñetas o negritas para facilitar la lectura en una pantalla móvil).`;
+   * Beneficios: [Detalles del beneficio aquí]
+4. Siempre enfatiza al final de forma breve que tus sugerencias son informativas y que es ideal consultar con un profesional de la salud.
+5. Sé conciso y estructurado (usa viñetas y negritas para una lectura ágil en celulares).`;
 
     const welcomeMsg = `Hola, Mi nombre es Aura, Tu asistente de entrenamiento y alimenticio. ¿En que puedo ayudarte hoy?`;
 
@@ -115,11 +119,15 @@ Instrucciones estrictas para tus respuestas:
 
   inicializarChatGenerico() {
     const systemPrompt = `Eres Aura, un chatbot asistente experto en nutrición y entrenamiento físico de la aplicación NutriPlus.
+
+[REGLA CRÍTICA DE IDIOMA]
+Debes responder ÚNICAMENTE en idioma ESPAÑOL. Está terminantemente prohibido generar texto en chino (中文), inglés o cualquier otro idioma que no sea español.
+
 Tu objetivo es recomendar comidas saludables y rutinas de ejercicio adaptadas. 
 Responde de forma amable, motivadora, clara y profesional en Español.
-A la hora de responder cuando te pidan rutinas de ejercicios, presenta cada ejercicio estrictamente en el siguiente formato:
+Al sugerir rutinas de ejercicios, es obligatorio y estricto presentar CADA ejercicio ÚNICAMENTE en el siguiente formato, sin añadir descripciones largas de ejecución o explicaciones de cómo realizarlo:
 Nombre del Ejercicio (Número de series x Número de repeticiones)
-Y en la descripción de cada ejercicio, incluye ÚNICAMENTE sus beneficios, sin añadir explicaciones largas sobre cómo realizarlo.`;
+* Beneficios: [Detalles del beneficio aquí]`;
 
     const welcomeMsg = `Hola, Mi nombre es Aura, Tu asistente de entrenamiento y alimenticio. ¿En que puedo ayudarte hoy?`;
 
@@ -149,27 +157,28 @@ Y en la descripción de cada ejercicio, incluye ÚNICAMENTE sus beneficios, sin 
     // Actualizamos configuración actual por si cambió en el perfil
     this.loadConfig();
 
-    this.ollamaService.chat(this.messages).subscribe({
-      next: (res) => {
-        this.loading = false;
-        if (res && res.message && res.message.content) {
-          this.messages.push({
-            role: 'assistant',
-            content: res.message.content
-          });
-        } else {
-          this.messages.push({
-            role: 'assistant',
-            content: 'Lo siento, he recibido una respuesta vacía del servidor de inteligencia artificial.'
-          });
-        }
-        this.scrollToBottom();
-      },
-      error: (err) => {
-        console.error('Error al conectar con Ollama:', err);
-        this.loading = false;
-        
-        const errorMsg = `No he podido conectarme a Ollama en **${this.ollamaUrl}** usando el modelo **${this.ollamaModel}**. 
+    // Añadimos una burbuja vacía de asistente que iremos rellenando con el stream
+    const assistantIndex = this.messages.push({ role: 'assistant', content: '' }) - 1;
+
+    // Pasamos el historial de mensajes excluyendo la burbuja vacía que acabamos de crear
+    this.ollamaService.chatStream(this.messages.slice(0, assistantIndex), (chunk) => {
+      // Ocultar indicador de carga en cuanto empiece a responder
+      this.loading = false;
+      this.messages[assistantIndex].content += chunk;
+      this.scrollToBottom();
+    }).then(() => {
+      this.loading = false;
+      this.scrollToBottom();
+    }).catch((err) => {
+      console.error('Error en stream de Ollama:', err);
+      this.loading = false;
+
+      // Si no recibimos nada, eliminamos la burbuja vacía
+      if (this.messages[assistantIndex].content === '') {
+        this.messages.splice(assistantIndex, 1);
+      }
+
+      const errorMsg = `No he podido conectarme a Ollama en **${this.ollamaUrl}** usando el modelo **${this.ollamaModel}**. 
 
 **Por favor, verifica lo siguiente:**
 1. Ollama debe estar ejecutándose en tu equipo.
@@ -186,12 +195,11 @@ Y en la descripción de cada ejercicio, incluye ÚNICAMENTE sus beneficios, sin 
      \`\`\`
 4. Puedes modificar esta configuración en la sección de tu **Perfil** (botón de "Configurar Chatbot IA").`;
 
-        this.messages.push({
-          role: 'assistant',
-          content: errorMsg
-        });
-        this.scrollToBottom();
-      }
+      this.messages.push({
+        role: 'assistant',
+        content: errorMsg
+      });
+      this.scrollToBottom();
     });
   }
 

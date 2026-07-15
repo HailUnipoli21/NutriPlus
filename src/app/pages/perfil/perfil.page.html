@@ -257,54 +257,6 @@
 
       </form>
 
-      <!-- Configuración de Chatbot IA (Ollama) -->
-      <button
-        class="btn config-btn-perfil"
-        type="button"
-        (click)="toggleConfig()"
-      >
-        {{ showConfig ? 'Ocultar Configuración IA' : 'Configurar Chatbot IA' }}
-      </button>
-
-      <!-- Panel de Configuración de Ollama -->
-      <div class="card config-panel" *ngIf="showConfig" style="margin-top: 16px;">
-        <h3 style="font-size: 16px; color: #ffffff; margin-bottom: 12px; font-weight: 700; border-bottom: 1px solid rgba(110, 86, 143, 0.08); padding-bottom: 6px;">
-          Configurar Ollama (Aura)
-        </h3>
-        
-        <div class="field">
-          <label>URL de la API:</label>
-          <input 
-            class="input"
-            type="text" 
-            [(ngModel)]="ollamaUrl" 
-            placeholder="http://localhost:11434"
-          />
-        </div>
-
-        <div class="field">
-          <label>Modelo:</label>
-          <input 
-            class="input"
-            type="text" 
-            [(ngModel)]="ollamaModel" 
-            placeholder="qwen2.5"
-          />
-        </div>
-
-        <div class="test-connection-area" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; gap: 8px;">
-          <button type="button" class="btn secondary" style="width: auto; padding: 10px 14px; font-size: 13px; margin: 0;" (click)="probarConexion()">
-            Probar Conexión
-          </button>
-          <div class="test-status" style="font-size: 12px; font-weight: 600;">
-            <span *ngIf="testConnectionStatus === 'success'" style="color: #50fa7b;">✅ ¡Conectado!</span>
-            <span *ngIf="testConnectionStatus === 'error'" style="color: #ff5252;">❌ Error de conexión</span>
-          </div>
-        </div>
-
-        <button type="button" class="btn green" (click)="saveConfig()">Guardar Configuración</button>
-      </div>
-
       <!-- Cerrar sesión -->
       <button
         class="btn logout-btn"

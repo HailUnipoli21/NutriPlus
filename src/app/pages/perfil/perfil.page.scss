@@ -292,21 +292,9 @@ a {
   }
 }
 
-// Botón de configurar chatbot
-.config-btn-perfil {
-  margin-top: 32px;
-  background: #7b609e;
-  border: 1px solid rgba(123, 96, 158, 0.4);
-  box-shadow: none;
-
-  &:active {
-    background: #5d4679;
-  }
-}
-
 // Botón de cerrar sesión
 .logout-btn {
-  margin-top: 16px;
+  margin-top: 32px;
   margin-bottom: 24px;
   background: #7b609e;
   border: 1px solid rgba(123, 96, 158, 0.4);
@@ -369,37 +357,44 @@ a {
   }
 }
 
-// Botón central cámara
+// Botón central de cámara
 .camera-nav {
   width: 66px;
   height: 66px;
 
   margin-top: -34px;
 
-  border-radius: 24px;
+  border-radius: 50%; /* Figura 2: Círculo perfecto */
 
-  background:
-    linear-gradient(
-      135deg,
-      $primary-dark,
-      $primary,
-      $accent-2
-    );
+  background: #15131b; /* Fondo oscuro sutil */
 
   display: grid;
   place-items: center;
 
-  color: #fff;
+  color: #7b609e; /* Color morado suave inactivo */
 
   box-shadow: none;
 
-  border: 1px solid rgba(123, 96, 158, 0.36);
+  border: 1px solid rgba(123, 96, 158, 0.22); /* Borde sutil */
 
   transform: translateY(-2px);
 
   ion-icon {
     font-size: 28px;
     display: block;
+  }
+
+  &.active {
+    border-radius: 24px; /* Figura 1: Squircle */
+    background:
+      linear-gradient(
+        135deg,
+        $primary-dark,
+        $primary,
+        $accent-2
+      );
+    color: #fff;
+    border-color: rgba(226, 184, 255, 0.36);
   }
 }
 

@@ -735,31 +735,44 @@ button {
   }
 }
 
-// Botón central activo
+// Botón central de cámara
 .camera-nav {
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  background: #2c2c2e;
+  width: 66px;
+  height: 66px;
+
+  margin-top: -34px;
+
+  border-radius: 50%; /* Figura 2: Círculo perfecto */
+
+  background: #15131b; /* Fondo oscuro sutil */
+
   display: grid;
   place-items: center;
-  color: #ffffff;
-  border: 1px solid #3e3e42;
-  transform: translateY(-4px);
-  transition: transform .18s ease, background .18s ease;
+
+  color: #7b609e; /* Color morado suave inactivo */
+
+  box-shadow: none;
+
+  border: 1px solid rgba(123, 96, 158, 0.22); /* Borde sutil */
+
+  transform: translateY(-2px);
 
   ion-icon {
-    font-size: 24px;
+    font-size: 28px;
     display: block;
   }
 
-  &:active {
-    transform: translateY(-2px) scale(.95);
-    background: #3e3e42;
-  }
-
   &.active {
-    border-color: $primary;
+    border-radius: 24px; /* Figura 1: Squircle */
+    background:
+      linear-gradient(
+        135deg,
+        $primary-dark,
+        $primary,
+        $accent-2
+      );
+    color: #fff;
+    border-color: rgba(226, 184, 255, 0.36);
   }
 }
 

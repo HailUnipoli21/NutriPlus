@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { OllamaService } from '../../services/ollama.service';
 
 type BiologicalSex = 'male' | 'female' | null;
 type ActivityLevel = 'sedentary' | 'light' | 'moderate' | 'high' | 'very_high' | null;
@@ -29,15 +28,8 @@ export class PerfilPage {
   successMessage = '';
   loading = false;
 
-  // Configuración de Ollama en Perfil
-  showConfig = false;
-  ollamaUrl = '';
-  ollamaModel = '';
-  testConnectionStatus: 'idle' | 'success' | 'error' = 'idle';
-
   constructor(
     private authService: AuthService,
-    private ollamaService: OllamaService,
     private router: Router
   ) {}
 
@@ -118,38 +110,5 @@ export class PerfilPage {
           this.router.navigateByUrl('/login', { replaceUrl: true });
         }
       });
-  }
-
-  toggleConfig() {
-    this.showConfig = !this.showConfig;
-    if (this.showConfig) {
-      this.ollamaUrl = this.ollamaService.getBaseUrl();
-      this.ollamaModel = this.ollamaService.getModel();
-      this.testConnectionStatus = 'idle';
-    }
-  }
-
-  probarConexion() {
-    this.testConnectionStatus = 'idle';
-    this.ollamaService.setBaseUrl(this.ollamaUrl);
-    
-    this.ollamaService.checkConnection().subscribe({
-      next: () => {
-        this.testConnectionStatus = 'success';
-      },
-      error: () => {
-        this.testConnectionStatus = 'error';
-      }
-    });
-  }
-
-  saveConfig() {
-    this.ollamaService.setBaseUrl(this.ollamaUrl);
-    this.ollamaService.setModel(this.ollamaModel);
-    this.showConfig = false;
-    this.successMessage = 'Configuración de Ollama guardada.';
-    setTimeout(() => {
-      this.successMessage = '';
-    }, 3000);
   }
 }
