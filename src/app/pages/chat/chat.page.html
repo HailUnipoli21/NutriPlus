@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Chat</ion-title>
+    <ion-title>Chat IA</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -25,23 +25,34 @@
           Asistente IA
         </h2>
 
-        <span></span>
+        <button
+          class="icon-btn clear-btn"
+          (click)="limpiarConversacion()"
+          aria-label="Limpiar Conversación"
+        >
+          🗑️
+        </button>
 
       </div>
 
-      <!-- Chat -->
-      <div class="chat">
+      <!-- Chat Container -->
+      <div class="chat" #chatContainer>
 
-        <div class="bubble ai">
-          Hola, soy tu asistente de salud. Cuéntame qué síntomas tienes o qué duda quieres resolver.
+        <div 
+          *ngFor="let msg of getVisibleMessages()" 
+          class="bubble" 
+          [ngClass]="{ 'ai': msg.role === 'assistant', 'user': msg.role === 'user' }"
+          [innerHTML]="formatMarkdown(msg.content)"
+        >
         </div>
 
-        <div class="bubble user">
-          Me duele la cabeza desde ayer.
-        </div>
-
-        <div class="bubble ai">
-          Entiendo. ¿El dolor es leve, moderado o intenso? ¿Tienes fiebre, náuseas o visión borrosa?
+        <!-- Indicador de carga de IA -->
+        <div class="bubble ai typing" *ngIf="loading">
+          <div class="dot-bounce">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </div>
 
       </div>
@@ -49,12 +60,20 @@
       <!-- Input de chat -->
       <div class="chat-input">
 
-        <input
-          type="text"
+        <textarea
+          class="chat-textarea"
           placeholder="Escribe tu mensaje..."
-        />
+          [(ngModel)]="newMessageText"
+          (keydown.enter)="$event.preventDefault(); sendMessage()"
+          [disabled]="loading"
+          rows="1"
+        ></textarea>
 
-        <button type="button">
+        <button 
+          type="button" 
+          (click)="sendMessage()"
+          [disabled]="loading || !newMessageText.trim()"
+        >
           ➤
         </button>
 
