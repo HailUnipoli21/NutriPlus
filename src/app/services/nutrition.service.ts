@@ -250,7 +250,7 @@ export class NutritionService {
         headers: {
           ...this.authHeaders()
         },
-        timeout: 30000,
+        timeout: 90000,
         validateStatus: () => true
       }
     );

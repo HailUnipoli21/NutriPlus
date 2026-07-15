@@ -40,13 +40,17 @@
 
           <div class="scan-corners"></div>
 
-          <div class="scan-icon">
-            📷
-          </div>
+          <ng-container *ngIf="!imagePreviewUrl">
+            <div class="scan-icon">
+              📷
+            </div>
 
-          <p>
-            Coloca tu comida dentro del recuadro
-          </p>
+            <p>
+              Coloca tu comida dentro del recuadro
+            </p>
+          </ng-container>
+
+          <img *ngIf="imagePreviewUrl" [src]="imagePreviewUrl" class="preview-img" alt="Vista previa" />
 
         </div>
 
@@ -218,16 +222,7 @@
           </span>
         </div>
 
-        <div class="meal-row">
-          <div>
-            <h3>Recomendación IA</h3>
-            <textarea
-              rows="3"
-              [value]="estimate.ai_recommendation || ''"
-              (input)="updateEstimateText('ai_recommendation', $event)"
-            ></textarea>
-          </div>
-        </div>
+
 
         <button
           class="btn secondary analyze-btn"

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FoodEstimate, MealType, NutritionService } from '../../services/nutrition.service';
 
 @Component({
@@ -10,6 +11,7 @@ import { FoodEstimate, MealType, NutritionService } from '../../services/nutriti
 export class ScanComidaPage implements OnInit {
   selectedFile?: File;
   selectedFileName = '';
+  imagePreviewUrl?: SafeUrl | string;
 
   estimate?: FoodEstimate;
 
@@ -31,7 +33,8 @@ export class ScanComidaPage implements OnInit {
   constructor(
     private readonly nutritionService: NutritionService,
     private readonly route: ActivatedRoute,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -58,6 +61,7 @@ export class ScanComidaPage implements OnInit {
     this.estimate = undefined;
     this.selectedFile = undefined;
     this.selectedFileName = '';
+    this.imagePreviewUrl = undefined;
 
     if (!file) {
       return;
@@ -71,6 +75,7 @@ export class ScanComidaPage implements OnInit {
 
     this.selectedFile = file;
     this.selectedFileName = file.name;
+    this.imagePreviewUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
   }
 
   onMealTypeChange(event: Event): void {
@@ -205,6 +210,7 @@ export class ScanComidaPage implements OnInit {
 
     this.selectedFile = undefined;
     this.selectedFileName = '';
+    this.imagePreviewUrl = undefined;
 
     this.estimate = {
       food_name: '',
