@@ -107,7 +107,9 @@ export class ScanComidaPage implements OnInit {
     this.isAnalyzing = true;
 
     try {
-      this.estimate = await this.nutritionService.analyzeFoodImage(this.selectedFile);
+      // Optimizar la imagen reduciendo su tamaño y calidad para no saturar la VRAM de la GPU
+      const optimizedFile = await this.resizeImage(this.selectedFile);
+      this.estimate = await this.nutritionService.analyzeFoodImage(optimizedFile);
 
       /*
         La foto se usa una sola vez:
@@ -246,5 +248,56 @@ export class ScanComidaPage implements OnInit {
     const date = new Date();
     const localDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
     return localDate.toISOString().slice(0, 10);
+  }
+
+  private resizeImage(file: File, maxW: number = 800, maxH: number = 800): Promise<File> {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event: any) => {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = () => {
+          let width = img.width;
+          let height = img.height;
+
+          if (width > maxW || height > maxH) {
+            if (width > height) {
+              height = Math.round((height * maxW) / width);
+              width = maxW;
+            } else {
+              width = Math.round((width * maxH) / height);
+              height = maxH;
+            }
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            resolve(file);
+            return;
+          }
+
+          ctx.drawImage(img, 0, 0, width, height);
+
+          canvas.toBlob((blob) => {
+            if (blob) {
+              const resizedFile = new File([blob], file.name, {
+                type: 'image/jpeg',
+                lastModified: Date.now()
+              });
+              resolve(resizedFile);
+            } else {
+              resolve(file);
+            }
+          }, 'image/jpeg', 0.85);
+        };
+        img.onerror = () => resolve(file);
+      };
+      reader.onerror = () => resolve(file);
+    });
   }
 }
